@@ -8,6 +8,14 @@ function RoutePoint() {
         this.contact_name = 'Steve';
         this.contact_phone = '+1-415-555-1212';
     }
+    else if (arguments.length == 1) {
+        var json = arguments[0];
+        this.address = json.address;
+        this.flights = json.flights;
+        this.elevator = json.elevator;
+        this.contact_name = json.contact_name;
+        this.contact_phone = json.contact_phone;
+    }
     else {
         throw 'Usage: new RoutePoint()';
     }
