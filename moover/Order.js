@@ -4,8 +4,16 @@
 
 function Order(json) {
     if (json == null) {
-        throw "TODO - default constructor";
+        this.customer = "<customerid>";
     }
-    this.customer = json.customer;
+    else {
+        this.customer = json.customer;
+    }
+
+    this.validate = function(){
+        if (!this.customer) {
+            throw "customer is not set";
+        }
+    };
 }
 
