@@ -1,17 +1,17 @@
-var RoutePoint = require('./RoutePoint');
+var Address = require('./Address');
 
 function Order() {
     if (arguments.length == 0) {
         this.customer = '<customerid>';
-        this.loc_start = new RoutePoint();
-        this.loc_end = new RoutePoint();
-        //this.destination = new RoutePoint();
+        this.loc_start = new Address();
+        this.loc_end = new Address();
+        //this.destination = new Address();
     }
     else if (arguments.length == 1) {
         var json = arguments[0];
         this.customer = json.customer;
-        this.loc_start = new RoutePoint(json.loc_start);
-        this.loc_end = new RoutePoint(json.loc_end);
+        this.loc_start = new Address(json.loc_start);
+        this.loc_end = new Address(json.loc_end);
     }
     else {
         throw 'Usage: "new Order()" or "new Order(json)"';
@@ -46,7 +46,7 @@ Order.prototype.test = function () {
     good.loc_start.elevator = false;
     good.loc_start.contact_name = 'Ryan';
     good.loc_start.contact_phone = "+1-650-555-1212";
-    good.loc_end = new RoutePoint();
+    good.loc_end = new Address();
     print('good Order: ' + JSON.stringify(good));
 
     // bad order
