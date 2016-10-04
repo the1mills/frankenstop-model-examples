@@ -2,7 +2,7 @@
 
 function RoutePoint() {
     if (arguments.length == 0) {
-        this.address = '1212 Nowhere Street, Nowherevill, XX 99999';
+        this.address = '1212 Nowhere Street, Nowhereville, XX 99999';
         this.flights = 1;
         this.elevator = true;
         this.contact_name = 'Steve';
