@@ -90,20 +90,6 @@ Order.prototype.test = function () {
         throw "validation failed on bad json";
     }
 
-    /*
-    // bad order
-    var badJson = "{"
-    var jbad = new Object();
-    try {
-        bad['height'] = 25;
-        bad['weight'] = 'potato';
-        var badorder = new Order(bad);
-        badorder.validate();
-    }
-    catch(err) {
-        failBad = err;
-    }
-    */
     print('Order test finished');
 };
 
