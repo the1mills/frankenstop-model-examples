@@ -1,6 +1,6 @@
 
 
-function RoutePoint() {
+function Address() {
     if (arguments.length == 0) {
         this.address = '1212 Nowhere Street, Nowhereville, XX 99999';
         this.flights = 1;
@@ -17,11 +17,11 @@ function RoutePoint() {
         this.contact_phone = json.contact_phone;
     }
     else {
-        throw 'Usage: new RoutePoint()';
+        throw 'Usage: new Address()';
     }
 }
 
-RoutePoint.prototype.validate = function () {
+Address.prototype.validate = function () {
     if (this.address.length < 1) {
         throw '"address" is not set';
     }
@@ -39,4 +39,4 @@ RoutePoint.prototype.validate = function () {
     }
 };
 
-module.exports = RoutePoint;
+module.exports = Address;
