@@ -19,3 +19,8 @@ Truck.prototype.validate = function validate(){
     // validate state has having acceptable properties
 
 };
+
+
+Truck.prototype.toJSON = function toJSON(){
+
+};

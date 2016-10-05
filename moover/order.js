@@ -19,6 +19,10 @@ function Order() {
     this.validate();
 }
 
+Order.prototype.toJSON = function toJSON(){
+
+};
+
 Order.prototype.validate = function(){
     if (this.customer.length < 1) {
         throw "customer is not set";

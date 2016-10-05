@@ -21,6 +21,10 @@ function Address() {
     }
 }
 
+Address.prototype.toJSON = function toJSON(){
+
+};
+
 Address.prototype.validate = function () {
     if (this.address.length < 1) {
         throw '"address" is not set';

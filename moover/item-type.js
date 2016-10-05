@@ -6,7 +6,13 @@ function ItemType(obj){
 
     this.dimensions = obj.dimensions;
 
+
 }
+
+
+ItemType.prototype.toJSON = function toJSON(){
+
+};
 
 
 ItemType.prototype.validate = function validate(){
