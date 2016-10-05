@@ -1,0 +1,23 @@
+{
+  "name": "moover-models",
+  "version": "0.0.1",
+  "description": "repo containing moover model code",
+  "main": "index.js",
+  "scripts": {
+    "test": "suman"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MooverTech/models.git"
+  },
+  "keywords": [
+    "moover",
+    "models"
+  ],
+  "author": "moover devs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MooverTech/models/issues"
+  },
+  "homepage": "https://github.com/MooverTech/models#readme"
+}
