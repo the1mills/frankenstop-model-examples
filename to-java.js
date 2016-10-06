@@ -7,7 +7,11 @@ var toJava = function (obj) {
         'number': 'long',
         'string': 'String'
     };
+    print('package co.moover.client.moover.models;');
+    print('');
+    print('import com.google.firebase.database.IgnoreExtraProperties;');
     print('// [START order_class]');
+    print('@IgnoreExtraProperties');
     print('public class ' + obj.constructor.name + ' {');
     for (var field in obj) {
         var value = obj[field];
@@ -26,11 +30,19 @@ var toJava = function (obj) {
             if (t == null) {
                 t = typeof(value);
             }
-            print('    public ' + t + ' ' + field + ' = "' + obj[field] + '";');
+            var q = '';
+            if (t == 'String') {
+                q = '"';
+            }
+            print('    public ' + t + ' ' + field + ' = ' + q + obj[field] + q + ';');
         }
     }
+    print('');
+    print('    public ' + obj.constructor.name  + '() {');
+    print('    };')
     print('};');
     print('// [END order_class]');
+    print('');
 }
 
 module.exports = {
@@ -42,3 +54,5 @@ var order = new moover.Order();
 toJava(order);
 var address = new moover.Address();
 toJava(address);
+var position = new moover.Position();
+toJava(position);

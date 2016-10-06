@@ -1,4 +1,5 @@
 var error = require('./error');
+var Position = require('./position');
 
 function Address() {
     if (arguments.length == 0) {
@@ -7,6 +8,7 @@ function Address() {
         this.elevator = true;
         this.contact_name = 'Steve';
         this.contact_phone = '+1-415-555-1212';
+        this.location = new Position();
     }
     else if (arguments.length == 1) {
         var json = arguments[0];
@@ -15,6 +17,7 @@ function Address() {
         this.elevator = json.elevator;
         this.contact_name = json.contact_name;
         this.contact_phone = json.contact_phone;
+        this.location = new Position(json.location);
     }
     else {
         throw 'Usage: new Address()';
