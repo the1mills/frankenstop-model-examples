@@ -3,5 +3,6 @@ module.exports = {
     ItemType: require('./item-type'),
     TruckType: require('./truck-type'),
     Order: require('./order'),
-    Truck: require('./truck')
+    Truck: require('./truck'),
+    error: require('./error')
 };

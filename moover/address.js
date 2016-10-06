@@ -1,4 +1,4 @@
-
+var error = require('./error');
 
 function Address() {
     if (arguments.length == 0) {
@@ -21,25 +21,25 @@ function Address() {
     }
 }
 
-Address.prototype.toJSON = function toJSON(){
-
+Address.prototype.throwError = function (field, error_msg) {
+    throw error_msg
 };
 
 Address.prototype.validate = function () {
     if (this.address.length < 1) {
-        throw '"address" is not set';
+        error.throwError('address', '"address" is not set');
     }
     if (this.flights < 0 || this.flights > 100) {
-        throw 'bad "flights" number: ' + this.flights;
+        error.throwError('flights', 'bad "flights" number: ' + this.flights);
     }
     if(typeof(this.elevator) !== "boolean") {
-        throw '"elevator" is not boolean ' + this.elevator + ' ' + typeof(this.elevator);
+        error.throwError('elevator', '"elevator" is not boolean ' + this.elevator + ' ' + typeof(this.elevator));
     }
     if (this.contact_name.length < 1) {
-        throw '"contact_name" is not set';
+        error.throwError('contact_name', '"contact_name" is not set');
     }
     if (this.contact_phone.length < 1) {
-        throw '"contact_phone" is not set';
+        error.throwError('contact_phone', '"contact_phone" is not set');
     }
 };
 

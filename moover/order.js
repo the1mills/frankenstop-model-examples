@@ -1,11 +1,11 @@
 var Address = require('./Address');
+var error = require('./error');
 
 function Order() {
     if (arguments.length == 0) {
         this.customer = '<customerid>';
         this.loc_start = new Address();
         this.loc_end = new Address();
-        //this.destination = new Address();
     }
     else if (arguments.length == 1) {
         var json = arguments[0];
@@ -16,23 +16,26 @@ function Order() {
     else {
         throw 'Usage: "new Order()" or "new Order(json)"';
     }
+    this.errorState = null;
     this.validate();
 }
 
-Order.prototype.toJSON = function toJSON(){
-
+var print = function(msg) {
+    console.log(msg);
 };
 
 Order.prototype.validate = function(){
     if (this.customer.length < 1) {
-        throw "customer is not set";
+        error.throwError('customer is not set', 'customer');
     }
-    this.loc_start.validate();
-    this.loc_end.validate();
-};
-
-var print = function(msg) {
-    console.log(msg);
+    try {
+        this.loc_start.validate();
+        this.loc_end.validate();
+    }
+    catch (e) {
+        print('error ' + typeof(e) + ' ' + e);
+        throw e;
+    }
 };
 
 Order.prototype.test = function () {
@@ -55,7 +58,7 @@ Order.prototype.test = function () {
 
     // bad order
     var failBad = null;
-    var bad = new Object();
+    var bad = {};
     try {
         bad['height'] = 25;
         bad['weight'] = 'potato';
@@ -73,12 +76,12 @@ Order.prototype.test = function () {
     }
 
     // good JSON
-    var goodJson = JSON.parse('{"customer":"steve","loc_start":{"address":"42 Anywhere Avenue, Anytown, YY 66666","flights":0,"elevator":false,"contact_name":"Ryan","contact_phone":"+1-650-555-1212"},"loc_end":{"address":"1212 Nowhere Street, Nowhereville, XX 99999","flights":1,"elevator":true,"contact_name":"Steve","contact_phone":"+1-415-555-1212"}}');
+    var goodJson = JSON.parse('{"customer":"steve","errorState":null,"loc_start":{"address":"42 Anywhere Avenue, Anytown, YY 66666","flights":0,"elevator":false,"contact_name":"Ryan","contact_phone":"+1-650-555-1212"},"loc_end":{"address":"1212 Nowhere Street, Nowhereville, XX 99999","flights":1,"elevator":true,"contact_name":"Steve","contact_phone":"+1-415-555-1212"}}');
     var goodOrder = new Order(goodJson);
     print('goodJson: ' + JSON.stringify(goodOrder));
 
     // bad JSON
-    var badJson = JSON.parse('{"customer":"steve","loc_start":{"address":"42 Anywhere Avenue, Anytown, YY 66666","flights":0,"elevator":"random","contact_name":"Ryan","contact_phone":"+1-650-555-1212"},"loc_end":{"address":"1212 Nowhere Street, Nowhereville, XX 99999","flights":1,"elevator":true,"contact_name":"Steve","contact_phone":"+1-415-555-1212"}}');
+    var badJson = JSON.parse('{"customer":"steve","errorState":null,"loc_start":{"address":"42 Anywhere Avenue, Anytown, YY 66666","flights":0,"elevator":"random","contact_name":"Ryan","contact_phone":"+1-650-555-1212"},"loc_end":{"address":"1212 Nowhere Street, Nowhereville, XX 99999","flights":1,"elevator":true,"contact_name":"Steve","contact_phone":"+1-415-555-1212"}}');
     var badJsonError = null;
     try {
         var badJsonOrder = new Order(badJson);
