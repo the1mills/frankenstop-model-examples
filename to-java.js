@@ -4,15 +4,17 @@ var print = function(msg) {
 
 var toJava = function (obj) {
     var j2j = {
-        'number': 'long',
+        'number': 'double',
         'string': 'String'
     };
+    var name = obj.constructor.name;
+    var lcname = name.toLowerCase();
     print('package co.moover.client.moover.models;');
     print('');
     print('import com.google.firebase.database.IgnoreExtraProperties;');
-    print('// [START order_class]');
+    print('// [START ' + lcname + '_class]');
     print('@IgnoreExtraProperties');
-    print('public class ' + obj.constructor.name + ' {');
+    print('public class ' + name + ' {');
     for (var field in obj) {
         var value = obj[field];
         if (typeof(value) === 'object') {
@@ -25,7 +27,6 @@ var toJava = function (obj) {
             // ignore
         }
         else {
-            //print('field ' + field + ' type ' + typeof(this[field]));
             var t = j2j[typeof(value)];
             if (t == null) {
                 t = typeof(value);
@@ -38,10 +39,10 @@ var toJava = function (obj) {
         }
     }
     print('');
-    print('    public ' + obj.constructor.name  + '() {');
+    print('    public ' + name  + '() {');
     print('    };')
     print('};');
-    print('// [END order_class]');
+    print('// [END ' + lcname + '_class]');
     print('');
 }
 
@@ -56,3 +57,5 @@ var address = new moover.Address();
 toJava(address);
 var position = new moover.Position();
 toJava(position);
+var ticket = new moover.Ticket();
+toJava(ticket);

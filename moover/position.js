@@ -23,4 +23,11 @@ Position.prototype.validate = function () {
     }
 };
 
+Position.prototype.nullify = function () {
+    this.lat = this.lon = 0.0;
+};
+
+Position.prototype.isNull = function () {
+    return Math.abs(this.lat) < 0.0001 && Math.abs(this.lon) < 0.0001;
+};
 module.exports = Position;

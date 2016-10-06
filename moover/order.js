@@ -12,7 +12,7 @@ function Order() {
         this.hours_driving = 2;
         this.hours_labor = 1;
         this.price = 80.49;
-        this.position = new Position();
+        this.pos = new Position();
         this.time_start = '/2016-12-25/1000';
         this.time_end = '/2016-12-25/1400';
         this.status = 'submitted';
@@ -27,12 +27,15 @@ function Order() {
         this.hours_driving = json.hours_driving;
         this.hours_labor = json.hours_labor;
         this.price = json.price;
-        this.position = new Position(json.position);
+        this.pos = new Position(json.position);
+        this.time_start = json.time_start;
+        this.time_end = json.time_end;
         this.status = json.status;
     }
     else {
         throw 'Usage: "new Order()" or "new Order(json)"';
     }
+    this.pos.nullify();
     var now = new Date();
     this.tz = now.toString().match(/\(([A-Za-z\s].*)\)/)[1]; // TODO get this from address
     this.update_time= now.getTime();
@@ -63,17 +66,23 @@ Order.prototype.validate = function(){
     if (!(this.status && typeof(this.status) === 'string')) {
         error.throwError('status must be a nonempty string', 'status');
     }
+    if (!(this.tz && typeof(this.time_start) === 'string')) {
+        error.throwError('time_start must be a nonempty string', 'time_start');
+    }
+    if (!(this.tz && typeof(this.time_end) === 'string')) {
+        error.throwError('time_end must be a nonempty string', 'time_end');
+    }
     if (!(this.tz && typeof(this.tz) === 'string')) {
         error.throwError('tz must be a nonempty string', 'tz');
     }
     if (this.update_time < 1475784667000) {
         error.throwError('update_time must be a number > 1475784667000', 'update_time');
     }
- 
+
     try {
         this.loc_start.validate();
         this.loc_end.validate();
-        this.position.validate();
+        this.pos.validate();
     }
     catch (e) {
         print('error ' + typeof(e) + ' ' + e);
