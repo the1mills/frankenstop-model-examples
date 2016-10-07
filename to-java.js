@@ -1,6 +1,10 @@
-var print = function(msg) {
-    console.log(msg);
+var print = function () {
+    //console.log takes more than one argument ;)
+    console.log.apply(this, arguments);
 };
+
+//alternatively, Steve you can do this, and call log instead of print
+const log = console.log.bind(console);
 
 var toJava = function (obj) {
     var j2j = {
@@ -9,18 +13,18 @@ var toJava = function (obj) {
     };
     var name = obj.constructor.name;
     var lcname = name.toLowerCase();
-    print('package co.moover.client.moover.models;');
-    print('');
-    print('import com.google.firebase.database.IgnoreExtraProperties;');
-    print('// [START ' + lcname + '_class]');
-    print('@IgnoreExtraProperties');
-    print('public class ' + name + ' {');
+    log('package co.moover.client.moover.models;');
+    log('');
+    log('import com.google.firebase.database.IgnoreExtraProperties;');
+    log('// [START ' + lcname + '_class]');
+    log('@IgnoreExtraProperties');
+    log('public class ' + name + ' {');
     for (var field in obj) {
         var value = obj[field];
         if (typeof(value) === 'object') {
             if (value != null) {
                 var n = value.constructor.name;
-                print('    public ' + n + ' ' + field + ' = new ' + n + '();');
+                log('    public ' + n + ' ' + field + ' = new ' + n + '();');
             }
         }
         else if (typeof(value) === 'function') {
@@ -35,16 +39,16 @@ var toJava = function (obj) {
             if (t == 'String') {
                 q = '"';
             }
-            print('    public ' + t + ' ' + field + ' = ' + q + obj[field] + q + ';');
+            log('    public ' + t + ' ' + field + ' = ' + q + obj[field] + q + ';');
         }
     }
-    print('');
-    print('    public ' + name  + '() {');
-    print('    };')
-    print('};');
-    print('// [END ' + lcname + '_class]');
-    print('');
-}
+    log('');
+    log('    public ' + name + '() {');
+    log('    };')
+    log('};');
+    log('// [END ' + lcname + '_class]');
+    log('');
+};
 
 module.exports = {
     'toJava': toJava

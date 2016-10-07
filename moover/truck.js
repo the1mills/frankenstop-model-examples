@@ -5,15 +5,20 @@
 
 const assert = require('assert');
 
-function Truck(truckTypeId, state){
+function Truck(obj) {
 
-    this.truckTypeId = truckTypeId;
-    this.state = state || {};
+    this.truckTypeId = obj.truckTypeId;
+    this.truckCategoryId = obj.truckCategoryId;
+
+    this.truckMaintenanceState = obj.truckMaintenanceState || {};
+
+    this.licensePlateNumber = obj.licensePlateNumber;
+    this.registrationInfo = obj.registrationInfo;
 
 }
 
 
-Truck.prototype.validate = function validate(){
+Truck.prototype.validate = function validate() {
 
     // validate truckTypeId as Firebase UID
     // validate state has having acceptable properties
@@ -21,6 +26,6 @@ Truck.prototype.validate = function validate(){
 };
 
 
-Truck.prototype.toJSON = function toJSON(){
+Truck.prototype.toJSON = function toJSON() {
 
 };
