@@ -6,14 +6,25 @@
 const validate = require('../lib/shared-validation');
 const _ = require('underscore');
 
-function Order(obj) {
+function Order(obj, isPreValidate) {
 
+    this.dateCreated = new Date().toISOString();
+    this.dateUpdated = new Date().toISOString();
+    this.dateItemsUpdated = new Date().toISOString();
+    this.dateQuoteUpdated = new Date().toISOString();
+    this.orderId = obj.orderId;
+    this.submitted = obj.submitted;
     this.pickup = obj.pickup;
     this.dropoff = obj.dropoff;
     this.items = obj.items;
-    this.dimensions = obj.dimensions;
+    this.status = obj.status;
+    this.state  = obj.state || {};
+    this.selectedTimeslot = obj.selectedTimeslot || {};
+    this.quote = obj.quote;
 
-    this.preValidate(['pickup', 'dropoff']);
+    if(isPreValidate){
+        this.preValidate(['pickup', 'dropoff']);
+    }
 
 }
 
@@ -28,13 +39,13 @@ Order.getSchema = function getSchema() {
         properties: {
 
             orderId: {
-                type: 'UID',
+                type: 'uid',
                 required: true
             },
 
             dateCreated: {
-                type: 'Date',
-                required: true,
+                type: 'date',
+                required: false,
             },
 
             submitted: {  //dateCreated should be the value to look for instead?
@@ -42,18 +53,19 @@ Order.getSchema = function getSchema() {
                 required: true
             },
 
-            itemsUpdated: {
-                type: 'Date',
+            dateItemsUpdated: {
+                type: 'date',
                 required: false
             },
 
-            quoteUpdated: {
-                type: 'Date',
+            dateQuoteUpdated: {
+                type: 'date',
                 required: false
             },
 
-
-            selectedTimeslot: {},
+            selectedTimeslot: {
+                type: 'object',
+            },
             state: {
                 type: 'string',  //active, pending etc
                 required: true
@@ -197,7 +209,7 @@ Order.getSchema = function getSchema() {
 };
 
 
-Order.prototype.preValidate = function validate(list) {
+Order.prototype.preValidate = function preValidateOrder(list) {
     list = _.flatten([list]);
     var errors = validate(Order.getSchema(), list, this);
     if (errors.length > 0) {
@@ -205,7 +217,7 @@ Order.prototype.preValidate = function validate(list) {
     }
 };
 
-Order.prototype.validate = function validate() {
+Order.prototype.validate = function validateOrder() {
     var list = Object.keys(Order.getSchema().properties);
     return validate(Order.getSchema(), list, this);
 };
