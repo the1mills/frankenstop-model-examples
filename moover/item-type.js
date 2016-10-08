@@ -1,4 +1,5 @@
 const assert = require('assert');
+const validateModel = require('../lib/shared-validation');
 
 function ItemType(obj) {
 
@@ -23,6 +24,55 @@ function ItemType(obj) {
 
 }
 
+ItemType.getSchema = function getSchema() {
+
+    return {
+
+        properties: {
+
+            numberOfMooversNeeded: {
+                type: "number",
+                required: true
+            },
+
+            dimensions: {
+                type: "object",
+                required: true,
+                properties: {
+                    minHeight: {
+                        type: "number",
+                        required: true
+                    },
+                    maxHeight: {
+                        type: "number",
+                        required: true
+                    },
+                    minWidth: {
+                        type: "number",
+                        required: true
+                    },
+                    maxWidth: {
+                        type: "number",
+                        required: true
+                    },
+                    minLength: {
+                        type: "number",
+                        required: true
+                    },
+                    maxLength: {
+                        type: "number",
+                        required: true
+                    }
+                }
+            }
+
+
+        }
+    }
+
+
+};
+
 
 ItemType.prototype.toJSON = function toJSON() {
 
@@ -30,7 +80,8 @@ ItemType.prototype.toJSON = function toJSON() {
 
 
 ItemType.prototype.validate = function validate() {
-
-    // validate state has having acceptable properties
-
+    return validateModel(ItemType.getSchema(), this);
 };
+
+
+module.exports = ItemType;
