@@ -1,33 +1,55 @@
-var error = require('./error');
+var validate = require('../lib/shared-validation');
 
-function Ticket() {
-    if (arguments.length == 0) {
-        this.customer = '<customer>';
-        this.orderId = '<orderId>';
-    }
-    else if (arguments.length == 1) {
-        var order = arguments[0];
 
-        this.orderId = order.orderId;
-        this.customer = order.customer;
-    }
-    else {
-        throw "Usage: new Ticket() or new Ticket(latlonjson)";
-    }
+function Ticket(obj) {
+
+    this.orderId = obj.orderId || '<orderId>';
+    this.customer = obj.customer || '<customer>';
+
+    this.preValidate(['orderId', 'customer']);
 }
 
-Ticket.prototype.validate = function () {
-    if (!this.customer) {
-        error.throwError('customer must not be empty', 'customer');
+Ticket.getSchema = function getTicketSchema() {
+
+    return {
+
+        allowExtraneousProperties: false,
+
+        properties: {
+
+            orderId: {
+                type: 'UID',
+                require: true
+            },
+
+            customer: {
+                type: 'string',
+                required: true
+
+            }
+        }
     }
-    if (!this.orderId) {
-        error.throwError('orderId must not be empty', 'orderId');
+
+};
+
+
+Ticket.prototype.preValidate = function preValidateTruckModel(list) {
+    list = _.flatten([list]);
+    var errors = validate(Ticket.getSchema(), list, this);
+    if (errors.length > 0) {
+        throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever
     }
 };
 
-Ticket.prototype.toPath = function () {
-    var path = '/order' + this.customer + '/job' + this.orderId;
-    return path;
+
+Ticket.prototype.validate = function () {
+    //this should not throw an error, simply return list of validation errors
+    var list = Object.keys(Ticket.getSchema().properties);
+    return validate(Ticket.getSchema(), list, this);
+};
+
+Ticket.prototype.toRefPath = function () {
+    return '/order' + this.customer + '/job' + this.orderId;
 };
 
 module.exports = Ticket;

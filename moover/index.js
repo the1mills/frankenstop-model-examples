@@ -5,6 +5,5 @@ module.exports = {
     TruckType: require('./truck-type'),
     Order: require('./order'),
     Ticket: require('./ticket'),
-    Truck: require('./truck'),
-    error: require('./error')
+    Truck: require('./truck')
 };

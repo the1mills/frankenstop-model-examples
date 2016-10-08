@@ -1,49 +1,97 @@
-var error = require('./error');
 var Position = require('./position');
+var validate = require('../lib/shared-validation');
 
-function Address() {
-    if (arguments.length == 0) {
-        this.address = '1212 Nowhere Street, Nowhereville, XX 99999';
-        this.flights = 1;
-        this.elevator = true;
-        this.contact_name = 'Steve';
-        this.contact_phone = '+1-415-555-1212';
-        this.location = new Position();
-    }
-    else if (arguments.length == 1) {
-        var json = arguments[0];
-        this.address = json.address;
-        this.flights = json.flights;
-        this.elevator = json.elevator;
-        this.contact_name = json.contact_name;
-        this.contact_phone = json.contact_phone;
-        this.location = new Position(json.location);
-    }
-    else {
-        throw 'Usage: new Address()';
-    }
+function Address(obj) {
+
+    this.addressString = obj.addressString || '1212 Nowhere Street, Nowhereville, XX 99999';
+    this.flights = obj.flights || 0;
+    this.elevator = !!obj.elevator;
+    this.contactName = obj.contactName;
+    this.contactPhone = obj.contactPhone;
+    this.geolocation = new Position(obj.geolocation);
+
+    //TODO: call parseAddressString(this);  //make sure address string is parseable?
+
+    //NOTE! Not all validation can happen in the constructor, validation should mostly happen in validate() method,
+    //which will be called on front-end before saving to DB, and in backend.
+
+    //validate anything here that needs to be validated in the constructor
+    this.preValidate(['flights', 'elevator']);
 }
 
-Address.prototype.throwError = function (field, error_msg) {
-    throw error_msg
+
+Address.getSchema = function getAddressSchema() {
+
+    return {
+
+        allowExtraneousProperties: false,
+
+        properties: {
+
+            addressString: {
+                type: 'string',
+                required: true,
+                minLength: 10,
+                maxLength: 300
+            },
+            flightsOfStairs: {
+                type: 'integer',
+                required: true,
+                minVal: 0,
+                maxVal: 120
+            },
+            hasElevator: {
+                type: 'boolean',
+                required: true
+            },
+            contactName: {
+                type: 'string',
+                required: true,
+                minLength: 5,
+                maxLength: 50
+            },
+            contactPhone: {
+                type: 'string',
+                required: true,
+                minLength: 10,
+                maxLength: 30
+            },
+
+            geolocation: {
+                type: 'object',
+                required: true,
+                properties: {
+                    latitude: {
+                        type: 'number',
+                        required: true
+                    },
+                    longitude: {
+                        type: 'number',
+                        required: true
+                    }
+                }
+
+            }
+        }
+
+    }
+
+};
+
+
+Address.prototype.preValidate = function (list) {
+    // this method throws error(s), for dev experience, not user experience
+    var errors;
+    if (errors = validate(Address.getSchema(), list, this) && errors.length > 0) {
+        throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever
+    }
 };
 
 Address.prototype.validate = function () {
-    if (this.address.length < 1) {
-        error.throwError('address', '"address" is not set');
-    }
-    if (this.flights < 0 || this.flights > 100) {
-        error.throwError('flights', 'bad "flights" number: ' + this.flights);
-    }
-    if(typeof(this.elevator) !== "boolean") {
-        error.throwError('elevator', '"elevator" is not boolean ' + this.elevator + ' ' + typeof(this.elevator));
-    }
-    if (this.contact_name.length < 1) {
-        error.throwError('contact_name', '"contact_name" is not set');
-    }
-    if (this.contact_phone.length < 1) {
-        error.throwError('contact_phone', '"contact_phone" is not set');
-    }
+    // this method does not throw errors, simply returns list of errors
+    var list = Object.keys(Address.getSchema().properties);
+    return validate(Address.getSchema(), list, this);
 };
+
 
 module.exports = Address;

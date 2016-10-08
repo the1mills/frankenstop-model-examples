@@ -1,31 +1,39 @@
-const assert = require('assert');
+const validate = require('../lib/shared-validation');
 
-function TruckType(obj){
+function TruckType(obj) {
 
-    this.truckCategory = obj.truckCategory;  // x-small, small, medium, large, x-large
-
+    this.truckCategoryId = obj.truckCategoryId;
     this.legalNumberOfPassengers = obj.legalNumberOfPassengers; //besides the 1 driver, how many can legal passenge ;)
-
     this.maxPayload = obj.maxPayload; //each truck type may have max payload
 
     ///// dimensions //////
     this.dimensions = obj.dimensions;
     //TruckTypes have point values for all dimensions, whereas TruckCategory has ranges
-    assert(this.dimensions.height, 'Please define a TruckType#height.');
-    assert(this.dimensions.width, 'Please define a TruckType#width.');
-    assert(this.dimensions.length, 'Please define a TruckType#length.');
+
+    this.preValidate(['dimensions', 'maxPayload', 'legalNumberOfPassengers', 'truckCategoryId']);
 
 }
 
 
-TruckType.prototype.validate = function validate(){
+TruckType.prototype.preValidate = function preValidateTruckTypeModel(list) {
+    // this method throws errors, for dev experience, not user experience
+    list = _.flatten([list]);
+    var errors = validate(TruckType.getSchema(), list, this);
+    if (errors.length > 0) {
+        throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever
+    }
+};
 
-    // validate state has having acceptable properties
+TruckType.prototype.validate = function validate() {
+    // this method does not throw errors, simply returns list of errors, for front-end usage
+    var list = Object.keys(TruckType.getSchema().properties);
+    return validate(TruckType.getSchema(), list, this);
+};
+
+
+TruckType.prototype.toJSON = function toJSON() {
 
 };
 
 
-
-TruckType.prototype.toJSON = function toJSON(){
-
-};
+return TruckType;

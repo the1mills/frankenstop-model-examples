@@ -1,26 +1,13 @@
 const assert = require('assert');
-const validateModel = require('../lib/shared-validation');
+const validate = require('../lib/shared-validation');
 
 function ItemType(obj) {
 
-
+    this.itemTypeId = '???';
     this.numberOfMooversNeeded = obj.numberOfMooversNeeded;
-    assert(Number.isInteger(this.numberOfMooversNeeded), 'ItemType#numberOfMooversNeeded must be an integer.');
-
-    ///// dimensions  /////
     this.dimensions = obj.dimensions;
 
-    //ItemTypes have dimension ranges, not just point values
-    assert(this.dimensions.minHeight, 'Please define an ItemType#minHeight.');
-    assert(this.dimensions.maxHeight, 'Please define an ItemType#maxHeight.');
-
-    assert(this.dimensions.minWidth, 'Please define an ItemType#minWidth.');
-    assert(this.dimensions.maxWidth, 'Please define an ItemType#maxWidth.');
-
-    assert(this.dimensions.minLength, 'Please define an ItemType#minLength.');
-    assert(this.dimensions.maxLength, 'Please define an ItemType#maxLength.');
-
-    ///
+    this.preValidate(['numberOfMooversNeeded','dimensions']);
 
 }
 
@@ -31,36 +18,36 @@ ItemType.getSchema = function getSchema() {
         properties: {
 
             numberOfMooversNeeded: {
-                type: "number",
+                type: 'integer',
                 required: true
             },
 
             dimensions: {
-                type: "object",
+                type: 'object',
                 required: true,
                 properties: {
                     minHeight: {
-                        type: "number",
+                        type: 'number',
                         required: true
                     },
                     maxHeight: {
-                        type: "number",
+                        type: 'number',
                         required: true
                     },
                     minWidth: {
-                        type: "number",
+                        type: 'number',
                         required: true
                     },
                     maxWidth: {
-                        type: "number",
+                        type: 'number',
                         required: true
                     },
                     minLength: {
-                        type: "number",
+                        type: 'number',
                         required: true
                     },
                     maxLength: {
-                        type: "number",
+                        type: 'number',
                         required: true
                     }
                 }
@@ -70,7 +57,6 @@ ItemType.getSchema = function getSchema() {
         }
     }
 
-
 };
 
 
@@ -79,8 +65,16 @@ ItemType.prototype.toJSON = function toJSON() {
 };
 
 
+ItemType.prototype.preValidate = function validate(list) {
+    var errors;
+    if (errors = validate(ItemType.getSchema(), list, this) && errors.length > 0) {
+        throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever
+    }
+};
+
 ItemType.prototype.validate = function validate() {
-    return validateModel(ItemType.getSchema(), this);
+    var list = Object.keys(ItemType.getSchema().properties);
+    return validate(ItemType.getSchema(), list, this);
 };
 
 

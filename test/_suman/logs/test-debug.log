@@ -1,0 +1,54 @@
+
+
+
+
+
+
+
+ ### Suman start run indiv. @Sat Oct 08 2016 14:00:02 GMT-0700 (PDT) ###
+
+ ### Filename: /Users/t_millal/WebstormProjects/moover/models/test/order.test.js
+
+ ### Command = ["/Users/t_millal/.nvm/versions/node/v6.7.0/bin/node","/Users/t_millal/WebstormProjects/moover/models/test/order.test.js"]
+
+
+
+Test error: constructor test
+	stack: RangeError: Maximum call stack size exceeded
+    at Function.getSchema (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:21:37)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:33)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+
+
+
+
+
+Test error: constructor test
+	stack: RangeError: Maximum call stack size exceeded
+    at Function.getSchema (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:21:37)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:33)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+    at validate (/Users/t_millal/WebstormProjects/moover/models/moover/order.js:202:18)
+
+
+
+
+
+ ### Suman end run ### 
+
+
+
+

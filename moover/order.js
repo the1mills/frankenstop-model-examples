@@ -3,23 +3,17 @@
  */
 
 
-
-
-const assert = require('assert');
-const validateModel = require('../lib/shared-validation');
-
+const validate = require('../lib/shared-validation');
+const _ = require('underscore');
 
 function Order(obj) {
 
-
     this.pickup = obj.pickup;
     this.dropoff = obj.dropoff;
-
     this.items = obj.items;
-
-    this.categoryName = obj.categoryName;  // x-small, small, medium, large, x-large
     this.dimensions = obj.dimensions;
 
+    this.preValidate(['pickup', 'dropoff']);
 
 }
 
@@ -40,7 +34,7 @@ Order.getSchema = function getSchema() {
 
             dateCreated: {
                 type: 'Date',
-                required: true
+                required: true,
             },
 
             submitted: {  //dateCreated should be the value to look for instead?
@@ -74,8 +68,13 @@ Order.getSchema = function getSchema() {
                 type: 'object',
                 required: true,
                 properties: {
-                    additionalInfo: {
-                        type: 'string',
+
+                    floors: {
+                        type: 'number',
+                        required: true
+                    },
+                    elevator: {
+                        type: 'boolean',
                         required: false
                     },
                     address: {
@@ -86,10 +85,14 @@ Order.getSchema = function getSchema() {
                         type: 'string',
                         required: true
                     },
-                    contactNumber: {
+                    contactPhone: {
                         type: 'string',
                         required: true
-                    }
+                    },
+                    additionalInfo: {
+                        type: 'string',
+                        required: false
+                    },
                 }
 
             },
@@ -115,10 +118,14 @@ Order.getSchema = function getSchema() {
                         type: 'string',
                         required: true
                     },
-                    contactNumber: {
+                    contactPhone: {
                         type: 'string',
                         required: true
-                    }
+                    },
+                    additionalInfo: {
+                        type: 'string',
+                        required: false
+                    },
                 }
 
 
@@ -152,32 +159,27 @@ Order.getSchema = function getSchema() {
             },
 
             items: {
-
-                // "1" : {
-                //     "itemType" : "kitchen",
-                //     "key" : "1",
-                //     "label" : "Freezer",
-                //     "moveTime" : "600",
-                //     "visible" : true,
-                //     "weight" : ".6"
-                // },
-
                 type: 'object',
                 required: true,
                 values: {
-                    required: true,  //length of Object.keys() needs to be > 1
+                    minLength: 1, // customer needs to move at least one item
+                    maxLength: 300, // customer cannot move more than 300 items
                     type: 'object',
                     properties: {
                         key: {
-                            type: 'UID',
+                            type: 'uid',
                             required: true,
                         },
                         itemType: {
-                            type: 'UID',
+                            type: 'uid',
                             required: true
                         },
-                        label: {},
-                        moveTime: {},
+                        label: {
+                            type: 'string'
+                        },
+                        moveTime: {
+                            type: 'number',
+                        },
                         visible: {
                             type: 'boolean'
                         },
@@ -195,8 +197,17 @@ Order.getSchema = function getSchema() {
 };
 
 
+Order.prototype.preValidate = function validate(list) {
+    list = _.flatten([list]);
+    var errors = validate(Order.getSchema(), list, this);
+    if (errors.length > 0) {
+        throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever
+    }
+};
+
 Order.prototype.validate = function validate() {
-    return validateModel(Order.getSchema(), this);
+    var list = Object.keys(Order.getSchema().properties);
+    return validate(Order.getSchema(), list, this);
 };
 
 

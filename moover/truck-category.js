@@ -1,24 +1,13 @@
-const assert = require('assert');
+
 const validateModel = require('../lib/shared-validation');
+
 
 
 function TruckCategory(obj) {
 
     this.categoryName = obj.categoryName;  // x-small, small, medium, large, x-large
-
-    ///// dimensions  /////
     this.dimensions = obj.dimensions;
-
-    //TruckCategory has dimension ranges, not just point values
-    // assert(this.dimensions.minHeight, 'Please define a TruckCategory#minHeight.');
-    // assert(this.dimensions.maxHeight, 'Please define a TruckCategory#maxHeight.');
-    //
-    // assert(this.dimensions.minWidth, 'Please define a TruckCategory#minWidth.');
-    // assert(this.dimensions.maxWidth, 'Please define a TruckCategory#maxWidth.');
-    //
-    // assert(this.dimensions.minLength, 'Please define a TruckCategory#minLength.');
-    // assert(this.dimensions.maxLength, 'Please define a TruckCategory#maxLength.');
-
+    this.preValidate(['dimensions','categoryName']);
 
 }
 
@@ -33,38 +22,50 @@ TruckCategory.getSchema = function getSchema() {
         properties: {
 
             categoryName: {
-                type: "string",
+                type: 'string',
                 required: true
             },
 
 
             dimensions: {
-                type: "object",
+                type: 'object',
                 required: true,
                 properties: {
                     minHeight: {
-                        type: "number",
-                        required: true
+                        type: 'number',
+                        required: true,
+                        minVal: 10,
+                        maxVal: 10000
                     },
                     maxHeight: {
-                        type: "number",
-                        required: true
+                        type: 'number',
+                        required: true,
+                        minVal: 10,
+                        maxVal: 10000
                     },
                     minWidth: {
-                        type: "number",
-                        required: true
+                        type: 'number',
+                        required: true,
+                        minVal: 10,
+                        maxVal: 10000
                     },
                     maxWidth: {
-                        type: "number",
-                        required: true
+                        type: 'number',
+                        required: true,
+                        minVal: 10,
+                        maxVal: 10000
                     },
                     minLength: {
-                        type: "number",
-                        required: true
+                        type: 'number',
+                        required: true,
+                        minVal: 10,
+                        maxVal: 10000
                     },
                     maxLength: {
-                        type: "number",
-                        required: true
+                        type: 'number',
+                        required: true,
+                        minVal: 10,
+                        maxVal: 10000
                     }
                 }
             }
@@ -76,10 +77,19 @@ TruckCategory.getSchema = function getSchema() {
 };
 
 
-TruckCategory.prototype.validate = function validate() {
+TruckCategory.prototype.preValidate = function preValidateTruckCategoryModel(list) {
+    // this method throws errors
+    list = _.flatten([list]);
+    var errors = validateModel(TruckCategory.getSchema(), list, this);
+    if(errors.length > 0){
+        throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever
+    }
+};
 
-    // validate state has having acceptable properties
-    return validateModel(TruckCategory.getSchema(), this);
+TruckCategory.prototype.validate = function validate() {
+    // this method does not throw errors, simply returns list of errors
+    var list = Object.keys(TruckCategory.getSchema().properties);
+    return validateModel(TruckCategory.getSchema(), list, this);
 };
 
 
