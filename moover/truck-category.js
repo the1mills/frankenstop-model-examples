@@ -1,5 +1,3 @@
-
-
 //core
 
 //npm
@@ -9,24 +7,32 @@ const _ = require('underscore');
 const validate = require('../lib/shared-validation');
 
 
+function TruckCategory(obj, isPreValidate) {
 
-function TruckCategory(obj) {
-
+    this.truckCategoryId = obj.truckCategoryId;
     this.categoryName = obj.categoryName;  // x-small, small, medium, large, x-large
     this.dimensions = obj.dimensions;
-    this.preValidate(['dimensions','categoryName']);
 
+    if(isPreValidate !== false){
+        this.preValidate(['dimensions', 'categoryName']);
+    }
 }
 
 
 TruckCategory.getSchema = function getSchema() {
 
-    return {
+    return Object.freeze({
 
         //all extant properties in models should be in schema if this is set to false
         allowExtraneousProperties: false,
 
         properties: {
+
+            truckCategoryId: {
+                type: 'string',
+                required: true,
+                primaryKey: true
+            },
 
             categoryName: {
                 type: 'string',
@@ -79,16 +85,16 @@ TruckCategory.getSchema = function getSchema() {
         }
 
 
-    }
+    })
 
 };
 
 
 TruckCategory.prototype.preValidate = function () {
     // this method throws errors
-    var list = _.flatten(Array.prototype.slice.apply(null,arguments));
+    var list = _.flatten(Array.prototype.slice.apply(null, arguments));
     var errors = validate(TruckCategory.getSchema(), list, this);
-    if(errors.length > 0){
+    if (errors.length > 0) {
         throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever
     }
 };

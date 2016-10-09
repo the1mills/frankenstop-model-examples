@@ -7,21 +7,30 @@ const _ = require('underscore');
 const validate = require('../lib/shared-validation');
 
 
-function Ticket(obj) {
+function Ticket(obj, isPreValidate) {
 
     this.orderId = obj.orderId || '<orderId>';
     this.customer = obj.customer || '<customer>';
 
-    this.preValidate(['orderId', 'customer']);
+    if(isPreValidate !== false){
+        this.preValidate(['orderId', 'customer']);
+    }
+
 }
 
 Ticket.getSchema = function getTicketSchema() {
 
-    return {
+    return Object.freeze({
 
         allowExtraneousProperties: false,
 
         properties: {
+
+            ticketId: {
+                type: 'uid',
+                required: false,
+                primaryKey: true
+            },
 
             orderId: {
                 type: 'uid',
@@ -34,7 +43,7 @@ Ticket.getSchema = function getTicketSchema() {
 
             }
         }
-    }
+    })
 
 };
 

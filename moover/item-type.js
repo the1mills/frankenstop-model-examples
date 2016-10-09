@@ -7,14 +7,15 @@ const _ = require('underscore');
 const validate = require('../lib/shared-validation');
 
 
-function ItemType(obj) {
+function ItemType(obj, isPreValidate) {
 
     this.itemTypeId = '???';
     this.numberOfMooversNeeded = obj.numberOfMooversNeeded;
     this.dimensions = obj.dimensions;
 
-    this.preValidate(['numberOfMooversNeeded', 'dimensions']);
-
+    if(isPreValidate !== false){
+        this.preValidate(['numberOfMooversNeeded', 'dimensions']);
+    }
 }
 
 ItemType.getSchema = function getSchema() {
@@ -22,6 +23,12 @@ ItemType.getSchema = function getSchema() {
     return Object.freeze({
 
         properties: {
+
+            itemTypeId: {
+                type: 'uid',
+                required: true,
+                primaryKey: true
+            },
 
             numberOfMooversNeeded: {
                 type: 'integer',

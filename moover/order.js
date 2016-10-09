@@ -26,7 +26,7 @@ function Order(obj, isPreValidate) {
     this.selectedTimeslot = obj.selectedTimeslot || {};
     this.quote = obj.quote;
 
-    if (isPreValidate) {
+    if (isPreValidate !== false) {  //default is to run preValidation
         this.preValidate(['pickup', 'dropoff']);
     }
 
@@ -44,7 +44,8 @@ Order.getSchema = function getSchema() {
 
             orderId: {
                 type: 'uid',
-                required: true
+                required: true,
+                primaryKey: true
             },
 
             customerId: {

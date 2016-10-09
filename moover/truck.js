@@ -13,7 +13,7 @@ const validate = require('../lib/shared-validation');
 
 
 
-function Truck(obj) {
+function Truck(obj, isPreValidate) {
 
     this.truckId = '???';
     this.truckTypeId = obj.truckTypeId;
@@ -23,31 +23,34 @@ function Truck(obj) {
     this.registrationInfo = obj.registrationInfo;
 
     //this may throw an error, for purposes of failing-fast for devs
-    this.preValidate(['truckTypeId', 'truckCategoryId']);
+    if(isPreValidate !== false){
+        this.preValidate(['truckTypeId', 'truckCategoryId']);
+    }
 
 }
 
 
 Truck.getSchema = function getTruckSchema() {
 
-    return {
+    return Object.freeze({
 
         allowExtraneousProperties: false,
 
         properties: {
 
             truckId: {
-                type: 'UID',
+                type: 'uid',
+                primaryKey: true,
                 required: false
             },
 
             truckTypeId: {
-                type: 'UID',
+                type: 'uid',
                 required: true
             },
 
             truckCategoryId: {
-                type: 'UID',
+                type: 'uid',
                 required: true
             },
 
@@ -71,7 +74,7 @@ Truck.getSchema = function getTruckSchema() {
             }
 
         }
-    }
+    })
 
 };
 

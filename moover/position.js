@@ -16,7 +16,7 @@ function Position(obj, isPreValidate) {
 
     // isPreValidate  = isPreValidate === false;
 
-    if (isPreValidate) {
+    if (isPreValidate !== false) {
         this.preValidate(['latitude', 'longitude']);
     }
 
@@ -25,7 +25,7 @@ function Position(obj, isPreValidate) {
 
 Position.getSchema = function getSchema() {
 
-    return {
+    return Object.freeze({
 
         allowExtraneousProperties: false,
 
@@ -45,7 +45,7 @@ Position.getSchema = function getSchema() {
         }
 
 
-    }
+    })
 
 
 };
