@@ -5,37 +5,11 @@
 
 
 
- ### Suman start run indiv. @Sat Oct 08 2016 20:21:25 GMT-0700 (PDT) ###
+ ### Suman start run indiv. @Sat Oct 08 2016 22:06:32 GMT-0700 (PDT) ###
 
- ### Filename: /Users/t_millal/WebstormProjects/moover/models/test/order.test.js
+ ### Filename: /Users/t_millal/WebstormProjects/moover/models/test/bs-test-model.test.js
 
- ### Command = ["/Users/t_millal/.nvm/versions/node/v6.7.0/bin/node","/Users/t_millal/WebstormProjects/moover/models/test/order.test.js"]
-
-
-
-Test error: constructor test
-	stack: Error: 'failed'
-    at /Users/t_millal/WebstormProjects/moover/models/node_modules/suman/lib/test-suite-helpers/handle-callback-helpers.js:49:43
-    at Domain.handleError (/Users/t_millal/WebstormProjects/moover/models/node_modules/suman/lib/test-suite-helpers/handle-test.js:63:21)
-    at emitOne (events.js:96:13)
-    at Domain.emit (events.js:188:7)
-    at Domain.errorHandler [as _errorHandler] (domain.js:97:23)
-    at process._fatalException (bootstrap_node.js:293:33)
-
-
-
-
-
-Test error: constructor test
-	stack: Error: 'failed'
-    at /Users/t_millal/WebstormProjects/moover/models/node_modules/suman/lib/test-suite-helpers/handle-callback-helpers.js:49:43
-    at Domain.handleError (/Users/t_millal/WebstormProjects/moover/models/node_modules/suman/lib/test-suite-helpers/handle-test.js:63:21)
-    at emitOne (events.js:96:13)
-    at Domain.emit (events.js:188:7)
-    at Domain.errorHandler [as _errorHandler] (domain.js:97:23)
-    at process._fatalException (bootstrap_node.js:293:33)
-
-
+ ### Command = ["/Users/t_millal/.nvm/versions/node/v6.7.0/bin/node","/Users/t_millal/WebstormProjects/moover/models/test/bs-test-model.test.js"]
 
 
 

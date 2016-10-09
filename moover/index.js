@@ -1,4 +1,7 @@
 module.exports = {
+
+    //export all moover models
+
     Position: require('./position'),
     Address: require('./address'),
     ItemType: require('./item-type'),
@@ -7,4 +10,5 @@ module.exports = {
     Order: require('./order'),
     Ticket: require('./ticket'),
     Truck: require('./truck')
+
 };

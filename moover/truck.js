@@ -101,3 +101,6 @@ Truck.prototype.toRefPath = function () {
 Truck.prototype.toJSON = function toJSON() {
 
 };
+
+
+module.exports = Truck;

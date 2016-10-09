@@ -99,4 +99,4 @@ TruckType.prototype.toJSON = function toJSON() {
 };
 
 
-return TruckType;
+module.exports = TruckType;
