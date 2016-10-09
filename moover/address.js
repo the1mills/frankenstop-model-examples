@@ -13,7 +13,7 @@ function Address(obj, isPreValidate) {
     this.addressId = obj.addressId || null;
     this.addressString = obj.addressString || '1212 Nowhere Street, Nowhereville, XX 99999';
     this.flights = obj.flights || 0;
-    this.elevator = !!obj.elevator;
+    this.hasElevator = !!obj.hasElevator;
     this.contactName = obj.contactName;
     this.contactPhone = obj.contactPhone;
     this.geolocation = new Position(obj.geolocation);
@@ -23,6 +23,8 @@ function Address(obj, isPreValidate) {
     this.zipcode = obj.zipcode;
     this.country = obj.country;
     this.stateOrRegion = obj.stateOrRegion;
+
+    this.addressString = this.constructAddressString();
 
     //TODO: call parseAddressString(this);  //make sure address string is parseable?
 
@@ -88,7 +90,7 @@ Address.getSchema = function getAddressSchema() {
                 required: true
             },
 
-            flightsOfStairs: {
+            flights: {
                 type: 'integer',
                 required: true,
                 minVal: 0,
@@ -142,9 +144,9 @@ Address.prototype.constructAddressString = function () {
 
 Address.prototype.preValidate = function () {
     // this method throws error(s), for dev experience, not user experience
-    var list = _.flatten(Array.prototype.slice.apply(null, arguments));
-    var errors;
-    if (errors = validate(Address.getSchema(), list, this) && errors.length > 0) {
+    var list = _.flatten(Array.prototype.slice.call(arguments));
+    var errors = validate(Address.getSchema(), list, this);
+    if (errors.length > 0) {
         throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever
     }
 };

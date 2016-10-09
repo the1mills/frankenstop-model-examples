@@ -49,7 +49,7 @@ Ticket.getSchema = function getTicketSchema() {
 
 
 Ticket.prototype.preValidate = function () {
-    var list = _.flatten(Array.prototype.slice.apply(null, arguments));
+    var list = _.flatten(Array.prototype.slice.call(arguments));
     var errors = validate(Ticket.getSchema(), list, this);
     if (errors.length > 0) {
         throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever

@@ -92,7 +92,7 @@ TruckCategory.getSchema = function getSchema() {
 
 TruckCategory.prototype.preValidate = function () {
     // this method throws errors
-    var list = _.flatten(Array.prototype.slice.apply(null, arguments));
+    var list = _.flatten(Array.prototype.slice.call(arguments));
     var errors = validate(TruckCategory.getSchema(), list, this);
     if (errors.length > 0) {
         throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever

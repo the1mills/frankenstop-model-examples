@@ -1,11 +1,10 @@
 {
   "orderId": "some-uid",
-  "dateCreated": "new Date().toISOString()",
   "submitted": true,
-  "dateItemsUpdated": "new Date().toISOString()",
-  "dateQuoteUpdated": "new Date().toISOString()",
+  "dateItemsUpdated": "2016-10-09T06:25:59.940Z",
+  "dateQuoteUpdated": "2016-10-09T06:25:59.940Z",
   "selectedTimeslot": {},
-  "state": "some state data",
+  "state": {},
   "status": "some status data",
   "pickup": {
     "floors": 3,

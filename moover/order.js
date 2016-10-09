@@ -1,4 +1,3 @@
-
 //core
 
 //npm
@@ -8,23 +7,22 @@ const _ = require('underscore');
 const validate = require('../lib/shared-validation');
 
 
-
 function Order(obj, isPreValidate) {
 
     this.dateCreated = new Date().toISOString();
     this.dateUpdated = new Date().toISOString();
     this.dateItemsUpdated = obj.dateItemsUpdated || new Date().toISOString();
     this.dateQuoteUpdated = obj.dateQuoteUpdated || new Date().toISOString();
-    this.orderId = obj.orderId;
+    this.orderId = obj.orderId || '????';
     this.customerId = obj.customerId || 'some-uid';
-    this.submitted = obj.submitted;
-    this.pickup = obj.pickup;
-    this.dropoff = obj.dropoff;
-    this.items = obj.items;
-    this.status = obj.status;
+    this.submitted = obj.submitted || false; // default is false
+    this.pickup = obj.pickup || {};
+    this.dropoff = obj.dropoff || {};
+    this.items = obj.items || {};
+    this.status = obj.status || 'pending';
     this.state = obj.state || {};
     this.selectedTimeslot = obj.selectedTimeslot || {};
-    this.quote = obj.quote;
+    this.quote = obj.quote || {};
 
     if (isPreValidate !== false) {  //default is to run preValidation
         this.preValidate(['pickup', 'dropoff']);
@@ -39,6 +37,7 @@ Order.getSchema = function getSchema() {
 
         //all extant properties in models must exist on schema if this is set to false
         allowExtraneousProperties: false,
+        forceAllObjectsToHavePropertyValidation: false,
 
         properties: {
 
@@ -83,8 +82,9 @@ Order.getSchema = function getSchema() {
                 properties: {}
             },
             state: {
-                type: 'string',  //active, pending etc
-                required: true
+                type: 'object',  //active, pending etc
+                required: true,
+                properties: {}
             },
             status: {
                 type: 'string',
@@ -105,8 +105,8 @@ Order.getSchema = function getSchema() {
                         type: 'boolean',
                         required: false
                     },
-                    address: {
-                        type: 'string',
+                    address: {   // Address class will validate this for us :) nice stuff
+                        type: 'uid',
                         required: true
                     },
                     contactName: {
@@ -139,7 +139,7 @@ Order.getSchema = function getSchema() {
                         required: false
                     },
                     address: {  //TODO: shouldn't address be broken down into components? So the address is valid?
-                        type: 'string',
+                        type: 'uid',
                         required: true
                     },
                     contactName: {
@@ -226,9 +226,63 @@ Order.getSchema = function getSchema() {
 
 };
 
+Order.validate = function (obj) {
+    return validate(Order.getSchema(), Object.keys(obj), obj);
+};
+
+
+Order.prototype.addItem = function (item) {
+
+    const items = {};
+    const key = Object.keys(item)[0];
+    items[key] = item;
+
+    if(this.items[key]){
+        throw new Error('Key already exists in items object => ' + key);
+    }
+
+    const errors = Order.validate({
+        items: items
+    });
+
+    if(errors.length < 1){
+        this.items[key] = item;
+        return null;
+    }
+    throw errors.map(e => e.stack || e).join('\n\n');
+};
+
+
+Order.prototype.setDropoff = function (dropoff) {
+
+    const errors = Order.validate({
+        dropoff: dropoff
+    });
+
+    if(errors.length < 1){
+        this.dropoff = dropoff;
+        return null;
+    }
+    throw errors.map(e => e.stack || e).join('\n\n');
+};
+
+
+Order.prototype.setPickup = function (pickup) {
+
+    const errors = Order.validate({
+        pickup: pickup
+    });
+
+    if(errors.length < 1){
+        this.pickup = pickup;
+        return null;
+    }
+    throw errors.map(e => e.stack || e).join('\n\n');
+};
+
 
 Order.prototype.preValidate = function () {
-    var list = _.flatten(Array.prototype.slice.apply(null, arguments));
+    var list = _.flatten(Array.prototype.slice.call(arguments));
     var errors = validate(Order.getSchema(), list, this);
     if (errors.length > 0) {
         throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever

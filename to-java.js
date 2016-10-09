@@ -44,7 +44,7 @@ var toJava = function (obj) {
     }
     log('');
     log('    public ' + name + '() {');
-    log('    };')
+    log('    };');
     log('};');
     log('// [END ' + lcname + '_class]');
     log('');
@@ -55,11 +55,46 @@ module.exports = {
 };
 
 var moover = require('./moover');
-var order = new moover.Order();
+var order = new moover.Order({}, false);
+var Address = moover.Address;
+
+order.addItem({
+    key: 'beluga',
+    itemType: 'uid',
+    label: 'uid',
+    weight: 30,
+    visible: true,
+    moveTime: 30
+});
+
+order.setDropoff({
+    floors: 3,
+    contactPhone: '3age',
+    contactName: 'nancy',
+    address: 'some-uid'
+    // address: new Address({
+    //     geolocation: {
+    //         longitude: 30,
+    //         latitude: 40
+    //     }
+    // })
+});
+
+order.setPickup({
+    floors: 3,
+    contactPhone: '3age',
+    contactName: 'nancy',
+    address: 'some-uid'
+});
+
+// order.validate().forEach(function(e){
+//     console.log('\n\n',e.stack || e);
+// });
+
 toJava(order);
-var address = new moover.Address();
-toJava(address);
-var position = new moover.Position();
-toJava(position);
-var ticket = new moover.Ticket();
-toJava(ticket);
+// var address = new moover.Address({});
+// toJava(address);
+// var position = new moover.Position({});
+// toJava(position);
+// var ticket = new moover.Ticket({});
+// toJava(ticket);
