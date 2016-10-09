@@ -107,18 +107,20 @@ Order.getSchema = function getSchema() {
                         required: true
                     },
 
-                    // floors: {
-                    //     type: 'number',
-                    //     required: true
-                    // },
-                    // elevator: {
-                    //     type: 'boolean',
-                    //     required: false
-                    // },
+                    //TODO: should "floors" and "elevator" be in Address model?
+                    floors: {
+                        type: 'number',
+                        required: true
+                    },
+                    elevator: {
+                        type: 'boolean',
+                        required: false
+                    },
 
                     address: {   // Address class will validate this for us :) nice stuff
                         type: 'object',
-                        required: true
+                        required: false,
+                        properties:{}
                     },
                     contactName: {
                         type: 'string',
@@ -148,21 +150,22 @@ Order.getSchema = function getSchema() {
                     },
 
 
-                    // these should be in address, user can update that data
+                    // TODO: "floors" and "elevator" should be in address?, user can update that data
 
-                    // floors: {
-                    //     type: 'number',
-                    //     required: true
-                    // },
-                    // elevator: {
-                    //     type: 'boolean',
-                    //     required: false
-                    // },
+                    floors: {
+                        type: 'number',
+                        required: true
+                    },
+                    elevator: {
+                        type: 'boolean',
+                        required: false
+                    },
 
                     address: {  //TODO: shouldn't address be broken down into components? So the address is valid?
                         type: 'object',
                         required: false,
-                        persist: false
+                        persist: false,
+                        properties:{}
                     },
                     contactName: {
                         type: 'string',
@@ -313,6 +316,10 @@ Order.prototype.preValidate = function () {
 
 Order.prototype.validate = function () {
     var list = Object.keys(Order.getSchema().properties);
+
+    //TODO: if building has more than 6 stairs, and no elevator, do we do the job?
+    //TODO: need to add extra validation here
+
     return validate(Order.getSchema(), list, this);
 };
 

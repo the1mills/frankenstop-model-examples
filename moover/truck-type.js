@@ -92,6 +92,9 @@ TruckType.prototype.preValidate = function () {
 
 TruckType.prototype.validate = function () {
     // this method does not throw errors, simply returns list of errors, for front-end usage
+
+
+
     var list = Object.keys(TruckType.getSchema().properties);
     return validate(TruckType.getSchema(), list, this);
 };

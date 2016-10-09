@@ -10,7 +10,7 @@ var validate = require('../lib/shared-validation');
 
 function Address(obj, isPreValidate) {
 
-    this.addressId = obj.addressId || null;
+    this.addressId = obj.addressId || '???';
     this.addressString = obj.addressString || '1212 Nowhere Street, Nowhereville, XX 99999';
     this.flights = obj.flights || 0;
     this.hasElevator = !!obj.hasElevator;
@@ -52,7 +52,7 @@ Address.getSchema = function getAddressSchema() {
         properties: {
 
             addressId: {
-                type: 'string',
+                type: 'uid',
                 required: false,
                 primaryKey: true
             },
