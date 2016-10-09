@@ -1,5 +1,13 @@
-var validate = require('../lib/shared-validation');
-var _ = require('underscore');
+
+//core
+
+
+//npm
+const _ = require('underscore');
+
+//project
+const validate = require('../lib/shared-validation');
+
 
 function Position(obj, isPreValidate) {
 
@@ -43,8 +51,8 @@ Position.getSchema = function getSchema() {
 };
 
 
-Position.prototype.preValidate = function (list) {
-    list = _.flatten([list]);
+Position.prototype.preValidate = function () {
+    var list = _.flatten(Array.prototype.slice.apply(null, arguments));
     var errors = validate(Position.getSchema(), list, this);
     if (errors.length > 0) {
         throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever

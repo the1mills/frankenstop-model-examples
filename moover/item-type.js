@@ -1,5 +1,11 @@
-const assert = require('assert');
+//core
+
+//npm
+const _ = require('underscore');
+
+//project
 const validate = require('../lib/shared-validation');
+
 
 function ItemType(obj) {
 
@@ -7,13 +13,13 @@ function ItemType(obj) {
     this.numberOfMooversNeeded = obj.numberOfMooversNeeded;
     this.dimensions = obj.dimensions;
 
-    this.preValidate(['numberOfMooversNeeded','dimensions']);
+    this.preValidate(['numberOfMooversNeeded', 'dimensions']);
 
 }
 
 ItemType.getSchema = function getSchema() {
 
-    return {
+    return Object.freeze({
 
         properties: {
 
@@ -55,7 +61,7 @@ ItemType.getSchema = function getSchema() {
 
 
         }
-    }
+    })
 
 };
 
@@ -65,9 +71,10 @@ ItemType.prototype.toJSON = function toJSON() {
 };
 
 
-ItemType.prototype.preValidate = function validate(list) {
-    var errors;
-    if (errors = validate(ItemType.getSchema(), list, this) && errors.length > 0) {
+ItemType.prototype.preValidate = function validate() {
+    var list = _.flatten(Array.prototype.slice.apply(null, arguments));
+    var errors = validate(ItemType.getSchema(), list, this);
+    if (errors.length > 0) {
         throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever
     }
 };

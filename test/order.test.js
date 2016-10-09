@@ -7,107 +7,65 @@ const suman = require('suman');
 const Test = suman.init(module, {});
 
 
-Test.describe(__filename, function () {
+Test.describe(__filename, function (fs, path, assert) {
 
     const Order = require('../moover').Order;
 
-    var orderData = [
-        {
-            orderId: 'some-uid',
-            dateCreated: new Date().toISOString(),
-            submitted: true,
-            dateItemsUpdated: new Date().toISOString(),
-            dateQuoteUpdated: new Date().toISOString(),
 
-            selectedTimeslot: {},
-            state: 'some state data',
-            status: 'some status data',
+    this.describe('test valid json', function () {
 
+        const dir = path.resolve(__dirname, 'fixtures/order-test-data/valid-json');
 
-            pickup: {
-                floors: 3,
-                elevator: false,
-                address: '831 laverne Way, Los Altos, CA, 94022',
-                contactName: 'Michelle Dohmage',
-                contactPhone: '650-259-3459',
-                additionalInfo: 'some addition info',
+        const orderData =
+            fs.readdirSync(dir).filter(p => String(p).endsWith('.json')).map(p => {
+                return JSON.parse(fs.readFileSync(path.resolve(dir, p)));
+            });
 
-            },
+        orderData.forEach(d => {
 
+            this.it('constructor test', t => {
 
-            dropoff: {
+                const keys = Object.keys(Order.getSchema().properties);
+                const errors = new Order(d, false).validate(keys);
 
-                floors: 2,
-                elevator: true,
-                address: '8999 laverne Way, Los Altos, CA, 94022',
-                contactName: 'Oleg Zandr',
-                contactPhone: '650-359-3450',
-                additionalInfo: 'some addition info',
-
-            },
-
-            quote: {
-
-                distanceAmount: 44,
-                distanceMiles: 33,
-                rate: 22,
-                taxAmount: 55,
-                totalAmount: 88
-
-            },
-
-            items: {
-
-                "1": {
-                    "itemType": "kitchen",
-                    "key": "1",
-                    "label": "Freezer",
-                    "moveTime": 600,
-                    "visible": true,
-                    "weight": .6
-                },
-                "12345": {
-                    "itemType": "kitchen",
-                    "key": "12345",
-                    "label": "Small Oven",
-                    "moveTime": 120,
-                    "visible": true,
-                    "weight": .03
-                },
-                "328-A52": {
-                    "itemType": "kitchen",
-                    "key": "328-A52",
-                    "label": "Desk",
-                    "moveTime": 0,
-                    "visible": true,
-                    "weight": 0
+                if (errors.length > 0) {
+                    console.log(errors.map(e => e.stack).join('\n\n'));
+                    throw 'failed';
                 }
+            });
 
-
-            }
-        },
-
-        // {
-        //     latitude: 0,
-        //     longitude: 190
-        // }
-
-    ];
-
-    orderData.forEach(d => {
-
-        this.it('constructor test', t => {
-            const keys = Object.keys(Order.getSchema().properties);
-
-            const errors = new Order(d, false).validate(keys);
-
-            if (errors.length > 0) {
-                console.log(errors.map(e => e.stack).join('\n\n'));
-                throw 'failed';
-            }
         });
 
     });
 
+
+    this.describe('test in-valid json', function () {
+
+        const dir = path.resolve(__dirname, 'fixtures/order-test-data/invalid-json');
+
+        const orderData =
+            fs.readdirSync(dir).filter(p => String(p).endsWith('.json')).map(p => {
+                return JSON.parse(fs.readFileSync(path.resolve(dir, p)));
+            });
+
+        orderData.forEach(d => {
+
+            this.it('constructor test', t => {
+
+                assert.throws(function () {
+                    const keys = Object.keys(Order.getSchema().properties);
+                    new Order(d, false).preValidate(keys);
+
+                });
+
+            });
+
+        });
+
+    });
+
+
 });
+
+
 

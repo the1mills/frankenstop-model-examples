@@ -1,28 +1,32 @@
-/**
- * Created by t_millal on 10/8/16.
- */
 
+//core
 
-const validate = require('../lib/shared-validation');
+//npm
 const _ = require('underscore');
+
+//project
+const validate = require('../lib/shared-validation');
+
+
 
 function Order(obj, isPreValidate) {
 
     this.dateCreated = new Date().toISOString();
     this.dateUpdated = new Date().toISOString();
-    this.dateItemsUpdated = new Date().toISOString();
-    this.dateQuoteUpdated = new Date().toISOString();
+    this.dateItemsUpdated = obj.dateItemsUpdated || new Date().toISOString();
+    this.dateQuoteUpdated = obj.dateQuoteUpdated || new Date().toISOString();
     this.orderId = obj.orderId;
+    this.customerId = obj.customerId || 'some-uid';
     this.submitted = obj.submitted;
     this.pickup = obj.pickup;
     this.dropoff = obj.dropoff;
     this.items = obj.items;
     this.status = obj.status;
-    this.state  = obj.state || {};
+    this.state = obj.state || {};
     this.selectedTimeslot = obj.selectedTimeslot || {};
     this.quote = obj.quote;
 
-    if(isPreValidate){
+    if (isPreValidate) {
         this.preValidate(['pickup', 'dropoff']);
     }
 
@@ -31,9 +35,9 @@ function Order(obj, isPreValidate) {
 
 Order.getSchema = function getSchema() {
 
-    return {
+    return Object.freeze({
 
-        //all extant properties in models should be in schema if this is set to false
+        //all extant properties in models must exist on schema if this is set to false
         allowExtraneousProperties: false,
 
         properties: {
@@ -43,9 +47,19 @@ Order.getSchema = function getSchema() {
                 required: true
             },
 
+            customerId: {
+                type: 'uid',
+                required: true
+            },
+
             dateCreated: {
                 type: 'date',
                 required: false,
+            },
+
+            dateUpdated: {
+                type: 'date',
+                required: false
             },
 
             submitted: {  //dateCreated should be the value to look for instead?
@@ -65,6 +79,7 @@ Order.getSchema = function getSchema() {
 
             selectedTimeslot: {
                 type: 'object',
+                properties: {}
             },
             state: {
                 type: 'string',  //active, pending etc
@@ -173,6 +188,9 @@ Order.getSchema = function getSchema() {
             items: {
                 type: 'object',
                 required: true,
+                keys: {
+                    //TODO: validate key format...
+                },
                 values: {
                     minLength: 1, // customer needs to move at least one item
                     maxLength: 300, // customer cannot move more than 300 items
@@ -202,15 +220,14 @@ Order.getSchema = function getSchema() {
                 }
             }
 
-        },
-    }
-
+        }
+    })
 
 };
 
 
-Order.prototype.preValidate = function preValidateOrder(list) {
-    list = _.flatten([list]);
+Order.prototype.preValidate = function preValidateOrder() {
+    var list = _.flatten(Array.prototype.slice.apply(null, arguments));
     var errors = validate(Order.getSchema(), list, this);
     if (errors.length > 0) {
         throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever

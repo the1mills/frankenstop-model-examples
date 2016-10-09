@@ -3,8 +3,15 @@
  */
 
 
-var assert = require('assert');
-var validate = require('../lib/shared-validation');
+//core
+
+//npm
+const _ = require('underscore');
+
+//project
+const validate = require('../lib/shared-validation');
+
+
 
 function Truck(obj) {
 
@@ -69,8 +76,8 @@ Truck.getSchema = function getTruckSchema() {
 };
 
 
-Truck.prototype.preValidate = function preValidateTruckModel(list) {
-    list = _.flatten([list]);
+Truck.prototype.preValidate = function preValidateTruckModel() {
+    var list = _.flatten(Array.prototype.slice.apply(null, arguments));
     var errors = validate(Truck.getSchema(), list, this);
     if (errors.length > 0) {
         throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever

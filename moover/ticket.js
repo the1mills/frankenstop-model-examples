@@ -1,4 +1,10 @@
-var validate = require('../lib/shared-validation');
+//core
+
+//npm
+const _ = require('underscore');
+
+//project
+const validate = require('../lib/shared-validation');
 
 
 function Ticket(obj) {
@@ -18,7 +24,7 @@ Ticket.getSchema = function getTicketSchema() {
         properties: {
 
             orderId: {
-                type: 'UID',
+                type: 'uid',
                 require: true
             },
 
@@ -33,8 +39,8 @@ Ticket.getSchema = function getTicketSchema() {
 };
 
 
-Ticket.prototype.preValidate = function preValidateTruckModel(list) {
-    list = _.flatten([list]);
+Ticket.prototype.preValidate = function preValidateTruckModel() {
+    var list = _.flatten(Array.prototype.slice.apply(null, arguments));
     var errors = validate(Ticket.getSchema(), list, this);
     if (errors.length > 0) {
         throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever

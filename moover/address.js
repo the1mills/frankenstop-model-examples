@@ -1,3 +1,12 @@
+
+//core
+
+//npm
+const _ = require('underscore');
+
+//project
+
+
 var Position = require('./position');
 var validate = require('../lib/shared-validation');
 
@@ -22,7 +31,7 @@ function Address(obj) {
 
 Address.getSchema = function getAddressSchema() {
 
-    return {
+    return Object.freeze({
 
         allowExtraneousProperties: false,
 
@@ -74,13 +83,14 @@ Address.getSchema = function getAddressSchema() {
             }
         }
 
-    }
+    })
 
 };
 
 
-Address.prototype.preValidate = function (list) {
+Address.prototype.preValidate = function () {
     // this method throws error(s), for dev experience, not user experience
+    var list = _.flatten(Array.prototype.slice.apply(null,arguments));
     var errors;
     if (errors = validate(Address.getSchema(), list, this) && errors.length > 0) {
         throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever

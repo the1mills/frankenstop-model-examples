@@ -1,5 +1,12 @@
 
-const validateModel = require('../lib/shared-validation');
+
+//core
+
+//npm
+const _ = require('underscore');
+
+//project
+const validate = require('../lib/shared-validation');
 
 
 
@@ -77,19 +84,19 @@ TruckCategory.getSchema = function getSchema() {
 };
 
 
-TruckCategory.prototype.preValidate = function preValidateTruckCategoryModel(list) {
+TruckCategory.prototype.preValidate = function preValidateTruckCategoryModel() {
     // this method throws errors
-    list = _.flatten([list]);
-    var errors = validateModel(TruckCategory.getSchema(), list, this);
+    var list = _.flatten(Array.prototype.slice.apply(null,arguments));
+    var errors = validate(TruckCategory.getSchema(), list, this);
     if(errors.length > 0){
         throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever
     }
 };
 
-TruckCategory.prototype.validate = function validate() {
+TruckCategory.prototype.validate = function validateTruckCategoryModel() {
     // this method does not throw errors, simply returns list of errors
     var list = Object.keys(TruckCategory.getSchema().properties);
-    return validateModel(TruckCategory.getSchema(), list, this);
+    return validate(TruckCategory.getSchema(), list, this);
 };
 
 

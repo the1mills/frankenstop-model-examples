@@ -1,3 +1,10 @@
+
+//core
+
+//npm
+const _ = require('underscore');
+
+//project
 const validate = require('../lib/shared-validation');
 
 function TruckType(obj) {
@@ -15,9 +22,9 @@ function TruckType(obj) {
 }
 
 
-TruckType.prototype.preValidate = function preValidateTruckTypeModel(list) {
+TruckType.prototype.preValidate = function preValidateTruckTypeModel() {
     // this method throws errors, for dev experience, not user experience
-    list = _.flatten([list]);
+    var list = _.flatten(Array.prototype.slice.apply(null,arguments));
     var errors = validate(TruckType.getSchema(), list, this);
     if (errors.length > 0) {
         throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever
