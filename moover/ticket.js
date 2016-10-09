@@ -9,14 +9,20 @@ const validate = require('../lib/shared-validation');
 
 function Ticket(obj, isPreValidate) {
 
+    this.ticketId = '???';
     this.orderId = obj.orderId || '<orderId>';
     this.customer = obj.customer || '<customer>';
 
     if(isPreValidate !== false){
-        this.preValidate(['orderId', 'customer']);
+        //this may throw an error, for purposes of failing-fast for devs
+        this.preValidate(Object.keys(this));
     }
 
 }
+
+Ticket.prototype.getRef = function(){
+    return '/tickets/' + this.ticketId;
+};
 
 Ticket.getSchema = function getTicketSchema() {
 

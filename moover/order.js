@@ -25,10 +25,15 @@ function Order(obj, isPreValidate) {
     this.quote = obj.quote || {};
 
     if (isPreValidate !== false) {  //default is to run preValidation
-        this.preValidate(['pickup', 'dropoff']);
+        //this may throw an error, for purposes of failing-fast for devs
+        this.preValidate(Object.keys(this));
     }
 
 }
+
+Order.prototype.getRef = function(){
+    return '/orders/' + this.orderId;
+};
 
 
 Order.getSchema = function getSchema() {
@@ -97,16 +102,22 @@ Order.getSchema = function getSchema() {
                 required: true,
                 properties: {
 
-                    floors: {
-                        type: 'number',
+                    addressId: {
+                        type: 'uid',
                         required: true
                     },
-                    elevator: {
-                        type: 'boolean',
-                        required: false
-                    },
+
+                    // floors: {
+                    //     type: 'number',
+                    //     required: true
+                    // },
+                    // elevator: {
+                    //     type: 'boolean',
+                    //     required: false
+                    // },
+
                     address: {   // Address class will validate this for us :) nice stuff
-                        type: 'uid',
+                        type: 'object',
                         required: true
                     },
                     contactName: {
@@ -130,17 +141,28 @@ Order.getSchema = function getSchema() {
                 type: 'object',
                 required: true,
                 properties: {
-                    floors: {
-                        type: 'number',
-                        required: true
-                    },
-                    elevator: {
-                        type: 'boolean',
-                        required: false
-                    },
-                    address: {  //TODO: shouldn't address be broken down into components? So the address is valid?
+
+                    addressId: {
                         type: 'uid',
-                        required: true
+                        required: false,
+                    },
+
+
+                    // these should be in address, user can update that data
+
+                    // floors: {
+                    //     type: 'number',
+                    //     required: true
+                    // },
+                    // elevator: {
+                    //     type: 'boolean',
+                    //     required: false
+                    // },
+
+                    address: {  //TODO: shouldn't address be broken down into components? So the address is valid?
+                        type: 'object',
+                        required: false,
+                        persist: false
                     },
                     contactName: {
                         type: 'string',
@@ -237,7 +259,7 @@ Order.prototype.addItem = function (item) {
     const key = Object.keys(item)[0];
     items[key] = item;
 
-    if(this.items[key]){
+    if (this.items[key]) {
         throw new Error('Key already exists in items object => ' + key);
     }
 
@@ -245,7 +267,7 @@ Order.prototype.addItem = function (item) {
         items: items
     });
 
-    if(errors.length < 1){
+    if (errors.length < 1) {
         this.items[key] = item;
         return null;
     }
@@ -259,7 +281,7 @@ Order.prototype.setDropoff = function (dropoff) {
         dropoff: dropoff
     });
 
-    if(errors.length < 1){
+    if (errors.length < 1) {
         this.dropoff = dropoff;
         return null;
     }
@@ -273,7 +295,7 @@ Order.prototype.setPickup = function (pickup) {
         pickup: pickup
     });
 
-    if(errors.length < 1){
+    if (errors.length < 1) {
         this.pickup = pickup;
         return null;
     }
@@ -296,6 +318,8 @@ Order.prototype.validate = function () {
 
 
 Order.prototype.toJSON = function toJSON() {
+
+    //TODO: this should remove properties that should not be persisted
 
 };
 

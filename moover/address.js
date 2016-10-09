@@ -28,15 +28,19 @@ function Address(obj, isPreValidate) {
 
     //TODO: call parseAddressString(this);  //make sure address string is parseable?
 
-    //NOTE! Not all validation can happen in the constructor, validation should mostly happen in validate() method,
-    //which will be called on front-end before saving to DB, and in backend.
+    // NOTE! Not all validation can happen in the constructor, validation should mostly happen in validate() method,
+    // which will be called on front-end before saving to DB, and in backend.
 
-    //validate anything here that needs to be validated in the constructor
+    // this may throw an error, for purposes of failing-fast for devs
     if(isPreValidate !== false){
-        this.preValidate(['flights', 'elevator']);
+        this.preValidate(Object.keys(this));
     }
 
 }
+
+Address.prototype.getRef = function(){
+     return '/addresses/' + this.addressId;
+};
 
 
 Address.getSchema = function getAddressSchema() {

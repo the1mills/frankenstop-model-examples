@@ -14,9 +14,13 @@ function TruckCategory(obj, isPreValidate) {
     this.dimensions = obj.dimensions;
 
     if(isPreValidate !== false){
-        this.preValidate(['dimensions', 'categoryName']);
+        this.preValidate(Object.keys(this));
     }
 }
+
+TruckCategory.prototype.getRef  = function(){
+    return 'truck_categories/' + this.truckCategoryId;
+};
 
 
 TruckCategory.getSchema = function getSchema() {
@@ -83,7 +87,6 @@ TruckCategory.getSchema = function getSchema() {
                 }
             }
         }
-
 
     })
 

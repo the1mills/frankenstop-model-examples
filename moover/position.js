@@ -11,16 +11,20 @@ const validate = require('../lib/shared-validation');
 
 function Position(obj, isPreValidate) {
 
+    this.positionId = null;
     this.latitude = obj.latitude || 37.7802809;
     this.longitude = obj.longitude || -122.4197164;
 
-    // isPreValidate  = isPreValidate === false;
-
-    if (isPreValidate !== false) {
-        this.preValidate(['latitude', 'longitude']);
+    if (isPreValidate !== false) { //default is to run prevalidation
+        //this may throw an error, for purposes of failing-fast for devs
+        this.preValidate(Object.keys(this));
     }
 
 }
+
+Position.prototype.getRef = function(){
+   return '/positions/' + this.positionId;
+};
 
 
 Position.getSchema = function getSchema() {

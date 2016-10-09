@@ -40,6 +40,10 @@ order.setPickup({
 
 //before saving model to the database, you should call:
 model.validate();
+
+//however, if you exclusively use the setter methods, the model is most likely valid
+//because each setter method validates the input against the model schema
+
 ```
 
 
