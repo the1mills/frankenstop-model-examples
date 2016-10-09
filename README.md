@@ -1,18 +1,42 @@
-# run 
+# Usage
 
-node test.js
+```js
+const models = require('moover');
 
-# TODO - define JS models
+const order = new models.Order({});
 
-Order @virtigex
+// create a model, which has useful methods for validation
+const order = new moover.Order({}, false);
 
-OrderTicket @virtigex
 
-Address @virtigex
+// each method on a model will validate the input
 
-Truck @the1mills
+order.addItem({
+    key: 'beluga',
+    itemType: 'uid',
+    label: 'uid',
+    weight: 30,
+    visible: true,
+    moveTime: 30
+});
 
-TruckType @the1mills
+order.setDropoff({
+    floors: 3,
+    contactPhone: '3age',
+    contactName: 'nancy',
+    address: 'some-uid'
+});
 
-ItemType @the1mills
+order.setPickup({
+    floors: 3,
+    contactPhone: '3age',
+    contactName: 'nancy',
+    address: 'some-uid'
+});
+
+
+//before saving model to the database, you should call:
+model.validate();
+```
+
 
