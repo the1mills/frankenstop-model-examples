@@ -3,9 +3,12 @@
 ```js
 const models = require('moover');
 
-const order = new models.Order({});
+
 
 // create a model, which has useful methods for validation
+const order = new models.Order({});
+
+//explicitly passing false will prevent pre-validation in the constructor
 const order = new moover.Order({}, false);
 
 
