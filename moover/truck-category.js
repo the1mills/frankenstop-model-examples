@@ -84,7 +84,7 @@ TruckCategory.getSchema = function getSchema() {
 };
 
 
-TruckCategory.prototype.preValidate = function preValidateTruckCategoryModel() {
+TruckCategory.prototype.preValidate = function () {
     // this method throws errors
     var list = _.flatten(Array.prototype.slice.apply(null,arguments));
     var errors = validate(TruckCategory.getSchema(), list, this);
@@ -93,7 +93,7 @@ TruckCategory.prototype.preValidate = function preValidateTruckCategoryModel() {
     }
 };
 
-TruckCategory.prototype.validate = function validateTruckCategoryModel() {
+TruckCategory.prototype.validate = function () {
     // this method does not throw errors, simply returns list of errors
     var list = Object.keys(TruckCategory.getSchema().properties);
     return validate(TruckCategory.getSchema(), list, this);

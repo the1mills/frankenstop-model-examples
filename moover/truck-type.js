@@ -22,7 +22,7 @@ function TruckType(obj) {
 }
 
 
-TruckType.prototype.preValidate = function preValidateTruckTypeModel() {
+TruckType.prototype.preValidate = function () {
     // this method throws errors, for dev experience, not user experience
     var list = _.flatten(Array.prototype.slice.apply(null,arguments));
     var errors = validate(TruckType.getSchema(), list, this);
@@ -31,7 +31,7 @@ TruckType.prototype.preValidate = function preValidateTruckTypeModel() {
     }
 };
 
-TruckType.prototype.validate = function validate() {
+TruckType.prototype.validate = function () {
     // this method does not throw errors, simply returns list of errors, for front-end usage
     var list = Object.keys(TruckType.getSchema().properties);
     return validate(TruckType.getSchema(), list, this);

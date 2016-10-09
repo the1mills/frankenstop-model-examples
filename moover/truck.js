@@ -76,7 +76,7 @@ Truck.getSchema = function getTruckSchema() {
 };
 
 
-Truck.prototype.preValidate = function preValidateTruckModel() {
+Truck.prototype.preValidate = function () {
     var list = _.flatten(Array.prototype.slice.apply(null, arguments));
     var errors = validate(Truck.getSchema(), list, this);
     if (errors.length > 0) {
@@ -84,7 +84,7 @@ Truck.prototype.preValidate = function preValidateTruckModel() {
     }
 };
 
-Truck.prototype.validate = function validateTruckModel() {
+Truck.prototype.validate = function () {
     //this should not throw an error, simply return list of validation errors
     var list = Object.keys(Truck.getSchema().properties);
     return validate(Truck.getSchema(), list, this);

@@ -39,7 +39,7 @@ Ticket.getSchema = function getTicketSchema() {
 };
 
 
-Ticket.prototype.preValidate = function preValidateTruckModel() {
+Ticket.prototype.preValidate = function () {
     var list = _.flatten(Array.prototype.slice.apply(null, arguments));
     var errors = validate(Ticket.getSchema(), list, this);
     if (errors.length > 0) {

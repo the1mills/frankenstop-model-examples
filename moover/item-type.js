@@ -71,7 +71,7 @@ ItemType.prototype.toJSON = function toJSON() {
 };
 
 
-ItemType.prototype.preValidate = function validate() {
+ItemType.prototype.preValidate = function () {
     var list = _.flatten(Array.prototype.slice.apply(null, arguments));
     var errors = validate(ItemType.getSchema(), list, this);
     if (errors.length > 0) {
@@ -79,7 +79,7 @@ ItemType.prototype.preValidate = function validate() {
     }
 };
 
-ItemType.prototype.validate = function validate() {
+ItemType.prototype.validate = function () {
     var list = Object.keys(ItemType.getSchema().properties);
     return validate(ItemType.getSchema(), list, this);
 };

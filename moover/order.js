@@ -226,7 +226,7 @@ Order.getSchema = function getSchema() {
 };
 
 
-Order.prototype.preValidate = function preValidateOrder() {
+Order.prototype.preValidate = function () {
     var list = _.flatten(Array.prototype.slice.apply(null, arguments));
     var errors = validate(Order.getSchema(), list, this);
     if (errors.length > 0) {
@@ -234,7 +234,7 @@ Order.prototype.preValidate = function preValidateOrder() {
     }
 };
 
-Order.prototype.validate = function validateOrder() {
+Order.prototype.validate = function () {
     var list = Object.keys(Order.getSchema().properties);
     return validate(Order.getSchema(), list, this);
 };
