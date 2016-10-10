@@ -14,9 +14,15 @@ function ItemType(obj, isPreValidate) {
     this.dimensions = obj.dimensions;
 
     if(isPreValidate !== false){
-        this.preValidate(['numberOfMooversNeeded', 'dimensions']);
+        //this may throw an error, for purposes of failing-fast for devs
+        this.preValidate(Object.keys(this));
     }
 }
+
+
+ItemType.prototype.getRef = function(){
+    return '/item_types/' + this.itemTypeId;
+};
 
 ItemType.getSchema = function getSchema() {
 

@@ -71,7 +71,7 @@ order.setDropoff({
     floors: 3,
     contactPhone: '3age',
     contactName: 'nancy',
-    address: 'some-uid'
+    addressId: 'some-uid'
     // address: new Address({
     //     geolocation: {
     //         longitude: 30,
@@ -84,7 +84,7 @@ order.setPickup({
     floors: 3,
     contactPhone: '3age',
     contactName: 'nancy',
-    address: 'some-uid'
+    addressId: 'some-uid'
 });
 
 // order.validate().forEach(function(e){

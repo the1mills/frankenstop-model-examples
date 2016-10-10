@@ -10,7 +10,7 @@ var validate = require('../lib/shared-validation');
 
 function Address(obj, isPreValidate) {
 
-    this.addressId = obj.addressId || null;
+    this.addressId = obj.addressId || '???';
     this.addressString = obj.addressString || '1212 Nowhere Street, Nowhereville, XX 99999';
     this.flights = obj.flights || 0;
     this.hasElevator = !!obj.hasElevator;
@@ -28,15 +28,19 @@ function Address(obj, isPreValidate) {
 
     //TODO: call parseAddressString(this);  //make sure address string is parseable?
 
-    //NOTE! Not all validation can happen in the constructor, validation should mostly happen in validate() method,
-    //which will be called on front-end before saving to DB, and in backend.
+    // NOTE! Not all validation can happen in the constructor, validation should mostly happen in validate() method,
+    // which will be called on front-end before saving to DB, and in backend.
 
-    //validate anything here that needs to be validated in the constructor
+    // this may throw an error, for purposes of failing-fast for devs
     if(isPreValidate !== false){
-        this.preValidate(['flights', 'elevator']);
+        this.preValidate(Object.keys(this));
     }
 
 }
+
+Address.prototype.getRef = function(){
+     return '/addresses/' + this.addressId;
+};
 
 
 Address.getSchema = function getAddressSchema() {
@@ -48,7 +52,7 @@ Address.getSchema = function getAddressSchema() {
         properties: {
 
             addressId: {
-                type: 'string',
+                type: 'uid',
                 required: false,
                 primaryKey: true
             },

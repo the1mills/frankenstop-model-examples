@@ -19,11 +19,14 @@ function TruckType(obj,isPreValidate) {
 
     //default is to run preValidation
     if (isPreValidate !== false) {
-        this.preValidate(['dimensions', 'maxPayload', 'legalNumberOfPassengers', 'truckCategoryId']);
+        this.preValidate(Object.keys(this));
     }
 
-
 }
+
+TruckType.prototype.getRef  = function(){
+    return 'truck_types/' + this.truckTypeId;
+};
 
 TruckType.getSchema = function getSchema() {
 
@@ -89,6 +92,9 @@ TruckType.prototype.preValidate = function () {
 
 TruckType.prototype.validate = function () {
     // this method does not throw errors, simply returns list of errors, for front-end usage
+
+
+
     var list = Object.keys(TruckType.getSchema().properties);
     return validate(TruckType.getSchema(), list, this);
 };

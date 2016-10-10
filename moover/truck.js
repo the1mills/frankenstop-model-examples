@@ -12,7 +12,6 @@ const _ = require('underscore');
 const validate = require('../lib/shared-validation');
 
 
-
 function Truck(obj, isPreValidate) {
 
     this.truckId = '???';
@@ -24,11 +23,14 @@ function Truck(obj, isPreValidate) {
 
     //this may throw an error, for purposes of failing-fast for devs
     if(isPreValidate !== false){
-        this.preValidate(['truckTypeId', 'truckCategoryId']);
+        this.preValidate(Object.keys(this));
     }
 
 }
 
+Truck.prototype.getRef = function(){
+    return '/trucks/' + this.truckId;
+};
 
 Truck.getSchema = function getTruckSchema() {
 

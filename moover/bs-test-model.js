@@ -20,7 +20,7 @@ function Duck(obj, isPreValidate) {
 
     //this may throw an error, for purposes of failing-fast for devs
     if (isPreValidate !== false) {
-        this.preValidate(['duckId']);
+        this.preValidate(Object.keys(this));  // validate existing keys
     }
 
 }
