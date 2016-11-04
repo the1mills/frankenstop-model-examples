@@ -9,6 +9,7 @@ const validate = require('../lib/shared-validation');
 
 function Order(obj, isPreValidate) {
 
+    this.orderId = this.orderId; //|| UUID
     this.dateCreated = new Date().toISOString();
     this.dateUpdated = new Date().toISOString();
     this.dateItemsUpdated = obj.dateItemsUpdated || new Date().toISOString();
@@ -107,20 +108,21 @@ Order.getSchema = function getSchema() {
                         required: true
                     },
 
-                    //TODO: should "floors" and "elevator" be in Address model?
-                    floors: {
-                        type: 'number',
-                        required: true
-                    },
-                    elevator: {
-                        type: 'boolean',
-                        required: false
-                    },
 
                     address: {   // Address class will validate this for us :) nice stuff
                         type: 'object',
                         required: false,
-                        properties:{}
+                        properties:{
+                            //TODO: should "floors" and "elevator" be in Address model?
+                            floors: {
+                                type: 'integer',
+                                required: true
+                            },
+                            elevator: {
+                                type: 'boolean',
+                                required: false
+                            },
+                        }
                     },
                     contactName: {
                         type: 'string',
@@ -165,7 +167,17 @@ Order.getSchema = function getSchema() {
                         type: 'object',
                         required: false,
                         persist: false,
-                        properties:{}
+                        properties:{
+                            //TODO: should "floors" and "elevator" be in Address model?
+                            floors: {
+                                type: 'integer',
+                                required: true
+                            },
+                            elevator: {
+                                type: 'boolean',
+                                required: false
+                            },
+                        }
                     },
                     contactName: {
                         type: 'string',

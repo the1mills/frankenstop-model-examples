@@ -3,13 +3,11 @@
 ```js
 const models = require('moover');
 
-
-
 // create a model, which has useful methods for validation
 const order = new models.Order({});
 
 //explicitly passing false will prevent pre-validation in the constructor
-const order = new moover.Order({}, false);
+const order = new models.Order({}, false);
 
 
 // each method on a model will validate the input
@@ -50,4 +48,4 @@ model.validate();
 TODOS:
 
 1. Billing model?
-2. ?
+2. 1:1 relationship between trips and orders?

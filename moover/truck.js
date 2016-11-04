@@ -21,8 +21,8 @@ function Truck(obj, isPreValidate) {
     this.licensePlate = obj.licensePlate;
     this.registrationInfo = obj.registrationInfo;
 
-    //this may throw an error, for purposes of failing-fast for devs
     if(isPreValidate !== false){
+        //this may throw an error, for purposes of failing-fast for devs
         this.preValidate(Object.keys(this));
     }
 
