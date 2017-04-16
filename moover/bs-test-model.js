@@ -1,6 +1,4 @@
-/**
- * Created by t_millal on 10/4/16.
- */
+
 
 
 //core
@@ -9,21 +7,16 @@
 const _ = require('underscore');
 
 //project
-const validate = require('../lib/shared-validation');
+const F = require('frankenstop');
 
 
-function Duck(obj, isPreValidate) {
+const Duck = F.bestow(function (obj, opts) {
 
     this.duckId = '???';
     this.duckTypeId = obj.duckTypeId || '???';
     this.duckSiblings = obj.duckSiblings;
-
-    //this may throw an error, for purposes of failing-fast for devs
-    if (isPreValidate !== false) {
-        this.preValidate(Object.keys(this));  // validate existing keys
-    }
-
-}
+    F.call(this,opts);
+});
 
 
 Duck.getSchema = function getDuckSchema() {
@@ -106,20 +99,6 @@ Duck.getSchema = function getDuckSchema() {
 
 };
 
-
-Duck.prototype.preValidate = function () {
-    var list = _.flatten(Array.prototype.slice.call(arguments));
-    var errors = validate(Duck.getSchema(), list, this);
-    if (errors.length > 0) {
-        throw errors.map(e => (e.stack || String(e))).join('\n\n');  //yummy as ever
-    }
-};
-
-Duck.prototype.validate = function () {
-    //this should not throw an error, simply return list of validation errors
-    var list = Object.keys(Duck.getSchema().properties);
-    return validate(Duck.getSchema(), list, this);
-};
 
 
 Duck.prototype.toRefPath = function () {

@@ -2,89 +2,161 @@
 
 ### Suman runner start ###
 
-Beginning of run at 1475994355628 = [Sat Oct 08 2016 23:25:55 GMT-0700 (PDT)]
-Command issued from the following directory "/Users/t_millal/WebstormProjects/moover/models"
-Command = ["/Users/t_millal/.nvm/versions/node/v6.7.0/bin/node","/Users/t_millal/.nvm/versions/node/v6.7.0/bin/suman"]
+Beginning of run at 1481623047023 = [Tue Dec 13 2016 01:57:27 GMT-0800 (PST)]
+Command issued from the following directory "/home/oleg/WebstormProjects/moover/models"
+Command = ["/home/oleg/.nvm/versions/node/v7.2.1/bin/node","/home/oleg/WebstormProjects/moover/models/node_modules/suman/cli.js"]
 
 
 [item-type.test.js] Error: *required* modelProp is undefined given by key = "numberOfMooversNeeded" on object => 
-[item-type.test.js] 
+
 [item-type.test.js] ItemType {
+
 [item-type.test.js]   itemTypeId: '???',
+
 [item-type.test.js]   numberOfMooversNeeded: undefined,
+
 [item-type.test.js]   dimensions: undefined }
-[item-type.test.js]     at /Users/t_millal/WebstormProjects/moover/models/lib/shared-validation.js:217:27
+
+[item-type.test.js]     at /home/oleg/WebstormProjects/moover/models/lib/shared-validation.js:224:27
+
 [item-type.test.js]     at Array.forEach (native)
-[item-type.test.js]     at recurseThroughProperties (/Users/t_millal/WebstormProjects/moover/models/lib/shared-validation.js:106:39)
-[item-type.test.js]     at validate (/Users/t_millal/WebstormProjects/moover/models/lib/shared-validation.js:268:7)
-[item-type.test.js]     at ItemType.preValidate (/Users/t_millal/WebstormProjects/moover/models/moover/item-type.js:83:18)
-[item-type.test.js]     at new ItemType (/Users/t_millal/WebstormProjects/moover/models/moover/item-type.js:17:14)
-[item-type.test.js]     at Object.<anonymous> (/Users/t_millal/WebstormProjects/moover/models/test/item-type.test.js:11:18)
-[item-type.test.js]     at Module._compile (module.js:556:32)
-[item-type.test.js]     at Object.Module._extensions..js (module.js:565:10)
-[item-type.test.js]     at Module.load (module.js:473:32)
-[item-type.test.js] 
 
-[truck-category.test.js] undefined
-[truck-category.test.js] 
+[item-type.test.js]     at recurseThroughProperties (/home/oleg/WebstormProjects/moover/models/lib/shared-validation.js:109:39)
 
-[simple.test.js] undefined
-[simple.test.js] 
+[item-type.test.js]     at validate (/home/oleg/WebstormProjects/moover/models/lib/shared-validation.js:278:7)
 
-[position.test.js] 
-[position.test.js] 
-[position.test.js]  ### Suman end run ### 
-[position.test.js] 
-[position.test.js] 
-[position.test.js] 
-[position.test.js] 
+[item-type.test.js]     at ItemType.preValidate (/home/oleg/WebstormProjects/moover/models/moover/item-type.js:89:18)
 
-[bs-test-model.test.js] 
-[bs-test-model.test.js] 
-[bs-test-model.test.js]  ### Suman end run ### 
-[bs-test-model.test.js] 
-[bs-test-model.test.js] 
-[bs-test-model.test.js] 
-[bs-test-model.test.js] 
+[item-type.test.js]     at new ItemType (/home/oleg/WebstormProjects/moover/models/moover/item-type.js:18:14)
 
-[order.test.js] 
-[order.test.js] 
-[order.test.js] Test error: constructor test
-[order.test.js] 	stack: Error: 'failed'
-[order.test.js]     at /Users/t_millal/WebstormProjects/moover/models/node_modules/suman/lib/test-suite-helpers/handle-callback-helpers.js:49:43
-[order.test.js]     at Domain.handleError (/Users/t_millal/WebstormProjects/moover/models/node_modules/suman/lib/test-suite-helpers/handle-test.js:63:21)
-[order.test.js]     at emitOne (events.js:96:13)
-[order.test.js]     at Domain.emit (events.js:188:7)
-[order.test.js]     at Domain.errorHandler [as _errorHandler] (domain.js:97:23)
-[order.test.js]     at process._fatalException (bootstrap_node.js:293:33)
-[order.test.js] 
-[order.test.js] 
+[item-type.test.js]     at Object.<anonymous> (/home/oleg/WebstormProjects/moover/models/test/item-type.test.js:11:18)
 
-[order.test.js] 
-[order.test.js] 
-[order.test.js] Test error: constructor test
-[order.test.js] 	stack: Error: 'failed'
-[order.test.js]     at /Users/t_millal/WebstormProjects/moover/models/node_modules/suman/lib/test-suite-helpers/handle-callback-helpers.js:49:43
-[order.test.js]     at Domain.handleError (/Users/t_millal/WebstormProjects/moover/models/node_modules/suman/lib/test-suite-helpers/handle-test.js:63:21)
-[order.test.js]     at emitOne (events.js:96:13)
-[order.test.js]     at Domain.emit (events.js:188:7)
-[order.test.js]     at Domain.errorHandler [as _errorHandler] (domain.js:97:23)
-[order.test.js]     at process._fatalException (bootstrap_node.js:293:33)
-[order.test.js] 
-[order.test.js] 
+[item-type.test.js]     at Module._compile (module.js:571:32)
 
-[order.test.js] 
-[order.test.js] 
+[item-type.test.js]     at Object.Module._extensions..js (module.js:580:10)
+
+[item-type.test.js]     at Module.load (module.js:488:32)
+
+[truck-category.test.js] Error: *required* modelProp is undefined given by key = "truckCategoryId" on object => 
+
+[truck-category.test.js] TruckCategory {
+
+[truck-category.test.js]   truckCategoryId: undefined,
+
+[truck-category.test.js]   categoryName: 'x-small',
+
+[truck-category.test.js]   dimensions: { minHeight: 30, maxHeight: 50 } }
+
+[truck-category.test.js]     at /home/oleg/WebstormProjects/moover/models/lib/shared-validation.js:224:27
+
+[truck-category.test.js]     at Array.forEach (native)
+
+[truck-category.test.js]     at recurseThroughProperties (/home/oleg/WebstormProjects/moover/models/lib/shared-validation.js:109:39)
+
+[truck-category.test.js]     at validate (/home/oleg/WebstormProjects/moover/models/lib/shared-validation.js:278:7)
+
+[truck-category.test.js]     at TruckCategory.preValidate (/home/oleg/WebstormProjects/moover/models/moover/truck-category.js:99:18)
+
+[truck-category.test.js]     at new TruckCategory (/home/oleg/WebstormProjects/moover/models/moover/truck-category.js:17:14)
+
+[truck-category.test.js]     at Object.<anonymous> (/home/oleg/WebstormProjects/moover/models/test/truck-category.test.js:10:23)
+
+[truck-category.test.js]     at Module._compile (module.js:571:32)
+
+[truck-category.test.js]     at Object.Module._extensions..js (module.js:580:10)
+
+[truck-category.test.js]     at Module.load (module.js:488:32)
+
+[simple.test.js] TypeError: Cannot read property 'floors' of undefined
+
+[simple.test.js]     at /home/oleg/WebstormProjects/moover/models/lib/shared-validation.js:117:36
+
+[simple.test.js]     at Array.forEach (native)
+
+[simple.test.js]     at recurseThroughProperties (/home/oleg/WebstormProjects/moover/models/lib/shared-validation.js:109:39)
+
+[simple.test.js]     at /home/oleg/WebstormProjects/moover/models/lib/shared-validation.js:271:17
+
+[simple.test.js]     at Array.forEach (native)
+
+[simple.test.js]     at recurseThroughProperties (/home/oleg/WebstormProjects/moover/models/lib/shared-validation.js:109:39)
+
+[simple.test.js]     at /home/oleg/WebstormProjects/moover/models/lib/shared-validation.js:271:17
+
+[simple.test.js]     at Array.forEach (native)
+
+[simple.test.js]     at recurseThroughProperties (/home/oleg/WebstormProjects/moover/models/lib/shared-validation.js:109:39)
+
+[simple.test.js]     at validate (/home/oleg/WebstormProjects/moover/models/lib/shared-validation.js:278:7)
+
+[order.test.js]  => Suman usage warning: no suman.once.pre.js file found. 
+
+[bs-test-model.test.js]  => Suman usage warning: no suman.once.pre.js file found. 
+
+[position.test.js]  => Suman usage warning: no suman.once.pre.js file found. 
+
+[order.test.js]   => Suman uncaught exception 3 => 
+
+[order.test.js] Error: ENOENT: no such file or directory, scandir '/home/oleg/WebstormProjects/moover/models/test/fixtures/order-test-data/invalid-json'
+
+[order.test.js]     at Object.fs.readdirSync (fs.js:870:18)
+
+[order.test.js]     at TestSuite.<anonymous> (/home/oleg/WebstormProjects/moover/models/test/order.test.js:47:16)
+
+[order.test.js]     at /home/oleg/WebstormProjects/moover/models/node_modules/suman/lib/TestSuite.js:516:26
+
+[order.test.js]     at /home/oleg/WebstormProjects/moover/models/node_modules/suman/lib/acquire-deps-fill-in.js:80:7
+
+[order.test.js]     at _combinedTickCallback (internal/process/next_tick.js:67:7)
+
+[order.test.js]     at process._tickDomainCallback (internal/process/next_tick.js:122:9)
+
+[order.test.js]   => Given uncaught exception, Suman will now run suman.once.post.js shutdown hooks...
+
+[order.test.js]   ( => TO IGNORE UNCAUGHT EXCEPTIONS AND CONTINUE WITH YOUR TEST(S), use the "--ignore-uncaught-exceptions" option.)
+
+[order.test.js] 'Error: ENOENT: no such file or directory, scandir \'/home/oleg/WebstormProjects/moover/models/test/fixtures/order-test-data/invalid-json\'\n    at Object.fs.readdirSync (fs.js:870:18)\n    at TestSuite.<anonymous> (/home/oleg/WebstormProjects/moover/models/test/order.test.js:47:16)\n    at /home/oleg/WebstormProjects/moover/models/node_modules/suman/lib/TestSuite.js:516:26\n    at /home/oleg/WebstormProjects/moover/models/node_modules/suman/lib/acquire-deps-fill-in.js:80:7\n    at _combinedTickCallback (internal/process/next_tick.js:67:7)\n    at process._tickDomainCallback (internal/process/next_tick.js:122:9)'
+
+[order.test.js] 'Error: ENOENT: no such file or directory, scandir \'/home/oleg/WebstormProjects/moover/models/test/fixtures/order-test-data/invalid-json\'\n    at Object.fs.readdirSync (fs.js:870:18)\n    at TestSuite.<anonymous> (/home/oleg/WebstormProjects/moover/models/test/order.test.js:47:16)\n    at /home/oleg/WebstormProjects/moover/models/node_modules/suman/lib/TestSuite.js:516:26\n    at /home/oleg/WebstormProjects/moover/models/node_modules/suman/lib/acquire-deps-fill-in.js:80:7\n    at _combinedTickCallback (internal/process/next_tick.js:67:7)\n    at process._tickDomainCallback (internal/process/next_tick.js:122:9)'
+
 [order.test.js]  ### Suman end run ### 
-[order.test.js] 
-[order.test.js] 
-[order.test.js] 
-[order.test.js] 
+
+[order.test.js] true
+
+[bs-test-model.test.js]   => Suman uncaught exception 3 => 
+
+[bs-test-model.test.js] Error: ENOENT: no such file or directory, scandir '/home/oleg/WebstormProjects/moover/models/test/fixtures/bs-test-model-data/invalid-json'
+
+[bs-test-model.test.js]     at Object.fs.readdirSync (fs.js:870:18)
+
+[bs-test-model.test.js]     at TestSuite.<anonymous> (/home/oleg/WebstormProjects/moover/models/test/bs-test-model.test.js:48:16)
+
+[bs-test-model.test.js]     at /home/oleg/WebstormProjects/moover/models/node_modules/suman/lib/TestSuite.js:516:26
+
+[bs-test-model.test.js]     at /home/oleg/WebstormProjects/moover/models/node_modules/suman/lib/acquire-deps-fill-in.js:80:7
+
+[bs-test-model.test.js]     at _combinedTickCallback (internal/process/next_tick.js:67:7)
+
+[bs-test-model.test.js]     at process._tickDomainCallback (internal/process/next_tick.js:122:9)
+
+[bs-test-model.test.js]   => Given uncaught exception, Suman will now run suman.once.post.js shutdown hooks...
+
+[bs-test-model.test.js]   ( => TO IGNORE UNCAUGHT EXCEPTIONS AND CONTINUE WITH YOUR TEST(S), use the "--ignore-uncaught-exceptions" option.)
+
+[bs-test-model.test.js] 'Error: ENOENT: no such file or directory, scandir \'/home/oleg/WebstormProjects/moover/models/test/fixtures/bs-test-model-data/invalid-json\'\n    at Object.fs.readdirSync (fs.js:870:18)\n    at TestSuite.<anonymous> (/home/oleg/WebstormProjects/moover/models/test/bs-test-model.test.js:48:16)\n    at /home/oleg/WebstormProjects/moover/models/node_modules/suman/lib/TestSuite.js:516:26\n    at /home/oleg/WebstormProjects/moover/models/node_modules/suman/lib/acquire-deps-fill-in.js:80:7\n    at _combinedTickCallback (internal/process/next_tick.js:67:7)\n    at process._tickDomainCallback (internal/process/next_tick.js:122:9)'
+
+[bs-test-model.test.js] 'Error: ENOENT: no such file or directory, scandir \'/home/oleg/WebstormProjects/moover/models/test/fixtures/bs-test-model-data/invalid-json\'\n    at Object.fs.readdirSync (fs.js:870:18)\n    at TestSuite.<anonymous> (/home/oleg/WebstormProjects/moover/models/test/bs-test-model.test.js:48:16)\n    at /home/oleg/WebstormProjects/moover/models/node_modules/suman/lib/TestSuite.js:516:26\n    at /home/oleg/WebstormProjects/moover/models/node_modules/suman/lib/acquire-deps-fill-in.js:80:7\n    at _combinedTickCallback (internal/process/next_tick.js:67:7)\n    at process._tickDomainCallback (internal/process/next_tick.js:122:9)'
+
+[bs-test-model.test.js]  ### Suman end run ### 
+
+[bs-test-model.test.js] true
+
+[position.test.js]  ### Suman end run ### 
+
+[position.test.js] true
 
 
 ### Suman runner end ###
-
-
 
 
 

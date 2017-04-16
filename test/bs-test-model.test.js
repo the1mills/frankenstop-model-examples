@@ -7,11 +7,11 @@ const suman = require('suman');
 const Test = suman.init(module, {});
 
 
-Test.describe(__filename, function (fs, path, assert) {
+Test.describe(__filename, {}, function (fs, path, assert) {
 
     const Duck = require('../moover/bs-test-model');
 
-    this.describe('test valid json', function () {
+    this.describe('test valid json', {}, function () {
 
         const dir = path.resolve(__dirname, 'fixtures/bs-test-model-data/valid-json');
 
@@ -27,7 +27,7 @@ Test.describe(__filename, function (fs, path, assert) {
             this.it('constructor test', t => {
 
                 const keys = Object.keys(Duck.getSchema().properties);
-                const errors = new Duck(d, false).validate(keys);
+                const errors = new Duck(d, {prevalidate:true}).validate(keys);
 
                 if (errors.length > 0) {
                     console.log(errors.map(e => e.stack).join('\n\n'));
